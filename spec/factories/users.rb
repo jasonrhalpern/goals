@@ -6,4 +6,10 @@ FactoryGirl.define do
     password 'abc123'
   end
 
+  factory :admin, parent: :user do
+    after(:create) do |user|
+      user.user_roles << create(:admin_user_role)
+    end
+  end
+
 end

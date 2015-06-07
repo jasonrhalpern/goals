@@ -1,12 +1,14 @@
 class User < ActiveRecord::Base
-
-  devise :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :trackable, :lockable
+  has_many :user_roles, inverse_of: :user
+  has_many :roles, :through => :user_roles
 
   validates :first_name, :last_name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: Devise::email_regexp }
   validates :password, presence: true, confirmation: true, length: { in: 6..20 }, if: :password_required?
   validate :password_complexity
+
+  devise :database_authenticatable, :registerable, :confirmable,
+         :recoverable, :rememberable, :trackable, :lockable
 
   def password_complexity
     if password.present? and not password.match(/^(?=.*[\d[!@#$%\^*()_\-=?|;:.,<>]])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%\^*()_\-=?|;:.,<>]*$/)

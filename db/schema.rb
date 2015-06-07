@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150602003553) do
+ActiveRecord::Schema.define(version: 20150607143744) do
+
+  create_table "roles", force: true do |t|
+    t.string "role"
+  end
+
+  create_table "user_roles", force: true do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
+  add_index "user_roles", ["role_id"], name: "index_user_roles_on_role_id"
+  add_index "user_roles", ["user_id"], name: "index_user_roles_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

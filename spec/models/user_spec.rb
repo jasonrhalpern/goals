@@ -39,4 +39,12 @@ describe User do
     expect(build_stubbed(:user, password: 'password')).to have(1).errors_on(:password)
   end
 
+  it 'does not have a role' do
+    expect(create(:user).roles.count).to eq(0)
+  end
+
+  it 'has an admin role' do
+    expect(create(:admin).roles.count).to eq(1)
+  end
+
 end
