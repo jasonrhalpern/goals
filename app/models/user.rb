@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_one :location, inverse_of: :user
   has_many :user_roles, inverse_of: :user
   has_many :roles, :through => :user_roles
 

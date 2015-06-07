@@ -24,6 +24,8 @@ gem 'spring',        group: :development
 gem 'devise'
 gem 'cancancan', '~> 1.10'
 
+gem 'geocoder'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
