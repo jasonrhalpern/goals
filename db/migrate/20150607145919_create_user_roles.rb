@@ -3,6 +3,8 @@ class CreateUserRoles < ActiveRecord::Migration
     create_table :user_roles do |t|
       t.references :user, index: true
       t.references :role, index: true
+
+      t.timestamps
     end
   end
 end

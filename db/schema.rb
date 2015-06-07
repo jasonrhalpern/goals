@@ -11,15 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150607143744) do
+ActiveRecord::Schema.define(version: 20150607145919) do
 
   create_table "roles", force: true do |t|
-    t.string "role"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "user_roles", force: true do |t|
-    t.integer "user_id"
-    t.integer "role_id"
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "user_roles", ["role_id"], name: "index_user_roles_on_role_id"
