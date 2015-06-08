@@ -1,4 +1,6 @@
 class Goal < ActiveRecord::Base
+  has_many :goal_tags, inverse_of: :goal
+  has_many :tags, :through => :goal_tags
   belongs_to :user, inverse_of: :goals
 
   enum status: [ :active, :closed, :completed ] #DO NOT change this order

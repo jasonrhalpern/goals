@@ -50,7 +50,7 @@ describe Payment do
     plan = create(:plan)
     payment = create(:payment, :stripe_plan_token => plan.stripe_plan_token)
     payment.set_active_until
-    active_until = "#{plan.trial_days}".to_i.days.from_now + 6.hours
+    active_until = "#{plan.trial_days}".to_i.days.from_now + Payment.update_buffer_time
     expect(payment.active_until.to_date).to eq(active_until.to_date)
   end
 
