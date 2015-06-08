@@ -47,4 +47,8 @@ describe User do
     expect(create(:admin).roles.count).to eq(1)
   end
 
+  it 'is has 3 goals' do
+    expect(create(:user_with_goals).goals.count).to eq(3)
+  end
+
 end

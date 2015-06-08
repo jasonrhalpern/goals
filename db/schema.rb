@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150607212233) do
+ActiveRecord::Schema.define(version: 20150607234352) do
+
+  create_table "goals", force: true do |t|
+    t.integer  "status",      default: 0
+    t.string   "title"
+    t.text     "description"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "goals", ["user_id"], name: "index_goals_on_user_id"
 
   create_table "locations", force: true do |t|
     t.string   "address_line_1"
