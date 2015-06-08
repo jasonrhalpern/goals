@@ -22,4 +22,16 @@ FactoryGirl.define do
     end
   end
 
+  factory :user_with_active_payment, parent: :user do
+    after(:build) do |user|
+      user.payment ||= build(:payment, :user => user)
+    end
+  end
+
+  factory :user_with_inactive_payment, parent: :user do
+    after(:build) do |user|
+      user.payment ||= build(:inactive_payment, :user => user)
+    end
+  end
+
 end

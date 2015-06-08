@@ -51,4 +51,61 @@ describe User do
     expect(create(:user_with_goals).goals.count).to eq(3)
   end
 
+  describe 'active?' do
+    it 'returns true if the user is active' do
+      user = build(:user_with_active_payment)
+      expect(user.active?).to be_truthy
+    end
+
+    it 'returns false if the user is not active' do
+      user = build(:user_with_inactive_payment)
+      expect(user.active?).to be_falsey
+    end
+  end
+
+  describe 'pending?' do
+    it 'returns true if the user is pending' do
+      user = build(:user)
+      expect(user.pending?).to be_truthy
+    end
+
+    it 'returns false if the user is not pending' do
+      user = build(:user_with_active_payment)
+      expect(user.pending?).to be_falsey
+    end
+  end
+
+  describe 'canceled?' do
+    it 'returns true if the user is canceled' do
+      payment = build(:payment, :stripe_sub_token => nil)
+      user = build(:user, :payment => payment)
+      expect(user.canceled?).to be_truthy
+    end
+
+    it 'returns false if the user is not canceled' do
+      payment = build(:payment)
+      user = build(:user, :payment => payment)
+      expect(user.canceled?).to be_falsey
+    end
+  end
+
+  describe 'deactivated?' do
+    it 'returns true if the user is deactivated' do
+      user = build(:user_with_inactive_payment)
+      expect(user.deactivated?).to be_truthy
+    end
+
+    it 'returns false if the user is active' do
+      user = build(:user_with_active_payment)
+      expect(user.deactivated?).to be_falsey
+    end
+  end
+
+  it 'returns a list of users with active payments' do
+    user1 = create(:user_with_active_payment)
+    user2 = create(:user_with_inactive_payment)
+
+    expect(User.active).to eq([user1])
+  end
+
 end

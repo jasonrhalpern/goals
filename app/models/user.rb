@@ -27,4 +27,24 @@ class User < ActiveRecord::Base
     roles.any? { |r| r.name.underscore.to_sym == role_sym }
   end
 
+  def self.active
+    joins(:payment).merge(Payment.active)
+  end
+
+  def active?
+    payment.present? && payment.active?
+  end
+
+  def pending?
+    payment.nil?
+  end
+
+  def canceled?
+    payment.present? && payment.stripe_sub_token.blank?
+  end
+
+  def deactivated?
+    payment.present? && payment.deactivated?
+  end
+
 end
