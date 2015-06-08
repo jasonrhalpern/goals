@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150607234352) do
+ActiveRecord::Schema.define(version: 20150608132453) do
 
   create_table "goals", force: true do |t|
     t.integer  "status",      default: 0
@@ -39,6 +39,27 @@ ActiveRecord::Schema.define(version: 20150607234352) do
   end
 
   add_index "locations", ["user_id"], name: "index_locations_on_user_id"
+
+  create_table "payments", force: true do |t|
+    t.string   "stripe_cus_token"
+    t.string   "stripe_sub_token"
+    t.datetime "active_until"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "payments", ["user_id"], name: "index_payments_on_user_id"
+
+  create_table "plans", force: true do |t|
+    t.string   "stripe_plan_token"
+    t.text     "description"
+    t.integer  "trial_days"
+    t.string   "interval"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "roles", force: true do |t|
     t.string   "name"

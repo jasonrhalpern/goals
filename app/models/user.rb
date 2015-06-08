@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_one :location, inverse_of: :user
+  has_one :payment, inverse_of: :user
   has_many :user_roles, inverse_of: :user
   has_many :roles, :through => :user_roles
   has_many :goals, inverse_of: :user

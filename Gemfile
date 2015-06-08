@@ -26,6 +26,8 @@ gem 'cancancan', '~> 1.10'
 
 gem 'geocoder'
 
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
@@ -34,6 +36,7 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem 'database_cleaner'
   gem 'launchy'
+  gem 'stripe-ruby-mock'
 end
 
 # Use ActiveModel has_secure_password

@@ -19,9 +19,7 @@ describe Goal do
   end
 
   it 'is invalid without a user' do
-    expect(build_stubbed(:goal, user: nil)).to have(1
-
-                                               ).errors_on(:user)
+    expect(build_stubbed(:goal, user: nil)).to have(1).errors_on(:user)
   end
 
   it 'is invalid if this user already has an active goal' do
