@@ -51,6 +51,10 @@ describe User do
     expect(create(:user_with_goals).goals.count).to eq(3)
   end
 
+  it 'is has 2 comments' do
+    expect(create(:user_with_comments).comments.count).to eq(2)
+  end
+
   describe 'active?' do
     it 'returns true if the user is active' do
       user = build(:user_with_active_payment)

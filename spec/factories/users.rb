@@ -34,4 +34,14 @@ FactoryGirl.define do
     end
   end
 
+  factory :user_with_comments, parent: :user do
+    transient do
+      comments_count 2
+    end
+
+    after(:create) do |user, evaluator|
+      create_list(:comment, evaluator.comments_count, user: user)
+    end
+  end
+
 end

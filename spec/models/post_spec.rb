@@ -22,5 +22,16 @@ describe Post do
     expect(build_stubbed(:post, goal: nil)).to have(1).errors_on(:goal)
   end
 
+  it 'is has 3 comments' do
+    expect(create(:post_with_comments).comments.count).to eq(3)
+  end
+
+  it 'destroys the associated comments' do
+    post = create(:post_with_comments)
+    comment = post.comments.first
+    expect(Comment.all).to include(comment)
+    post.destroy
+    expect(Comment.all).not_to include(comment)
+  end
 
 end
