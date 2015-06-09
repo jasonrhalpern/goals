@@ -28,7 +28,15 @@ describe Goal do
 
   it 'is invalid if this user already has an active goal' do
     goal = create(:goal)
-    expect(build_stubbed(:goal, user: goal.user)).to have(1).errors_on(:title)
+    expect(build_stubbed(:goal, user: goal.user)).to have(1).errors_on(:base)
+  end
+
+  it 'is associated with 3 tags' do
+    expect(create(:goal_with_tags).tags.count).to eq(3)
+  end
+
+  it 'is associated with 3 goal tags' do
+    expect(create(:goal_with_tags).goal_tags.count).to eq(3)
   end
 
 end

@@ -9,4 +9,14 @@ FactoryGirl.define do
   factory :completed_goal, parent: :goal do
     status :closed
   end
+
+  factory :goal_with_tags, parent: :goal do
+    transient do
+      tags_count 3
+    end
+
+    after(:create) do |goal, evaluator|
+      create_list(:goal_tag, evaluator.tags_count, goal: goal)
+    end
+  end
 end

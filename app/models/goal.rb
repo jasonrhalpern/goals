@@ -2,6 +2,7 @@ class Goal < ActiveRecord::Base
   has_many :milestones, inverse_of: :goal
   has_many :goal_tags, inverse_of: :goal
   has_many :tags, :through => :goal_tags
+  has_many :posts, inverse_of: :goal
   belongs_to :user, inverse_of: :goals
 
   enum status: [ :active, :closed, :completed ] #DO NOT change this order
@@ -14,7 +15,7 @@ class Goal < ActiveRecord::Base
 
   def one_active_goal_per_user
     if user.present? && Goal.exists?(user_id: user.id, status: Goal.statuses[:active])
-      errors.add :title, 'You can only have one active goal at a time. Please complete or close your active goal before
+      errors.add :base, 'You can only have one active goal at a time. Please complete or close your active goal before
                             starting a new one.'
     end
   end
