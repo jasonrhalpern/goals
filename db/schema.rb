@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150608200147) do
+ActiveRecord::Schema.define(version: 20150609134007) do
 
   create_table "goal_tags", force: true do |t|
     t.integer  "goal_id"
@@ -49,6 +49,17 @@ ActiveRecord::Schema.define(version: 20150608200147) do
   end
 
   add_index "locations", ["user_id"], name: "index_locations_on_user_id"
+
+  create_table "milestones", force: true do |t|
+    t.integer  "status",        default: 0
+    t.text     "description"
+    t.date     "reach_by_date"
+    t.integer  "goal_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "milestones", ["goal_id"], name: "index_milestones_on_goal_id"
 
   create_table "payments", force: true do |t|
     t.string   "stripe_cus_token"

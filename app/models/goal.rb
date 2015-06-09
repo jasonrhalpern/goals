@@ -1,4 +1,5 @@
 class Goal < ActiveRecord::Base
+  has_many :milestones, inverse_of: :goal
   has_many :goal_tags, inverse_of: :goal
   has_many :tags, :through => :goal_tags
   belongs_to :user, inverse_of: :goals
@@ -7,11 +8,11 @@ class Goal < ActiveRecord::Base
 
   validates :status, :title, :description, :user, presence: true
   validates :title, length: { maximum: 200 }
-  validate :one_open_goal_per_user
+  validate :one_active_goal_per_user
 
   private
 
-  def one_open_goal_per_user
+  def one_active_goal_per_user
     if user.present? && Goal.exists?(user_id: user.id, status: Goal.statuses[:active])
       errors.add :title, 'You can only have one active goal at a time. Please complete or close your active goal before
                             starting a new one.'
