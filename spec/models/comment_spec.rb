@@ -10,6 +10,10 @@ describe Comment do
     expect(build_stubbed(:comment, content: nil)).to have(1).errors_on(:content)
   end
 
+  it 'is invalid with content that is too long' do
+    expect(build_stubbed(:comment, content: 'hey' * 101)).to have(1).errors_on(:content)
+  end
+
   it 'is invalid without a user' do
     expect(build_stubbed(:comment, user: nil)).to have(1).errors_on(:user)
   end

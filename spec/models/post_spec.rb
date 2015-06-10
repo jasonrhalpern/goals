@@ -28,10 +28,8 @@ describe Post do
 
   it 'destroys the associated comments' do
     post = create(:post_with_comments)
-    comment = post.comments.first
-    expect(Comment.all).to include(comment)
-    post.destroy
-    expect(Comment.all).not_to include(comment)
+    comment_count = post.comments.count
+    expect{ post.destroy }.to change{ Comment.count }.by(-comment_count)
   end
 
 end
