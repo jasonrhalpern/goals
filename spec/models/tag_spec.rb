@@ -23,4 +23,15 @@ describe Tag do
     expect(create(:tag_with_goals).goal_tags.count).to eq(3)
   end
 
+  it 'destroys the associated goal tags' do
+    tag = create(:tag_with_goals)
+    goal_tag_count = tag.goal_tags.count
+    expect{ tag.destroy }.to change{ GoalTag.count }.by(-goal_tag_count)
+  end
+
+  it 'does not destroy the associated goals' do
+    tag = create(:tag_with_goals)
+    expect{ tag.destroy }.not_to change{ Goal.count }
+  end
+
 end

@@ -39,4 +39,37 @@ describe Goal do
     expect(create(:goal_with_tags).goal_tags.count).to eq(3)
   end
 
+  it 'is associated with 2 milestones' do
+    expect(create(:goal_with_milestones).milestones.count).to eq(2)
+  end
+
+  it 'is associated with 2 posts' do
+    expect(create(:goal_with_posts).posts.count).to eq(2)
+  end
+
+  it 'destroys the associated goal tags' do
+    goal = create(:goal_with_tags)
+    goal_tag_count = goal.goal_tags.count
+    expect{ goal.destroy }.to change{ GoalTag.count }.by(-goal_tag_count)
+  end
+
+  it 'does not destroy the associated tags' do
+    goal = create(:goal_with_tags)
+    expect{ goal.destroy }.not_to change{ Tag.count }
+  end
+
+  it 'destroys the associated posts' do
+    goal = create(:goal_with_posts)
+    posts_count = goal.posts.count
+    expect{ goal.destroy }.to change{ Post.count }.by(-posts_count)
+  end
+
+  it 'destroys the associated milestones' do
+    goal = create(:goal_with_milestones)
+    milestones_count = goal.milestones.count
+    expect{ goal.destroy }.to change{ Milestone.count }.by(-milestones_count)
+  end
+
+
+
 end

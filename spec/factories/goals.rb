@@ -19,4 +19,24 @@ FactoryGirl.define do
       create_list(:goal_tag, evaluator.tags_count, goal: goal)
     end
   end
+
+  factory :goal_with_posts, parent: :goal do
+    transient do
+      posts_count 2
+    end
+
+    after(:create) do |goal, evaluator|
+      create_list(:post, evaluator.posts_count, goal: goal)
+    end
+  end
+
+  factory :goal_with_milestones, parent: :goal do
+    transient do
+      milestones_count 2
+    end
+
+    after(:create) do |goal, evaluator|
+      create_list(:milestone, evaluator.milestones_count, goal: goal)
+    end
+  end
 end

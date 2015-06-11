@@ -1,8 +1,8 @@
 class Goal < ActiveRecord::Base
-  has_many :milestones, inverse_of: :goal
-  has_many :goal_tags, inverse_of: :goal
+  has_many :milestones, inverse_of: :goal, dependent: :destroy
+  has_many :goal_tags, inverse_of: :goal, dependent: :destroy
   has_many :tags, :through => :goal_tags
-  has_many :posts, inverse_of: :goal
+  has_many :posts, inverse_of: :goal, dependent: :destroy
   belongs_to :user, inverse_of: :goals
 
   enum status: [ :active, :closed, :completed ] #DO NOT change this order

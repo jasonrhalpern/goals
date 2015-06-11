@@ -1,10 +1,10 @@
 class User < ActiveRecord::Base
-  has_one :location, inverse_of: :user
-  has_one :payment, inverse_of: :user
-  has_many :user_roles, inverse_of: :user
+  has_one :location, inverse_of: :user, dependent: :destroy
+  has_one :payment, inverse_of: :user, dependent: :destroy
+  has_many :user_roles, inverse_of: :user, dependent: :destroy
   has_many :roles, :through => :user_roles
-  has_many :goals, inverse_of: :user
-  has_many :comments, inverse_of: :user
+  has_many :goals, inverse_of: :user, dependent: :destroy
+  has_many :comments, inverse_of: :user, dependent: :destroy
 
   validates :first_name, :last_name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: Devise::email_regexp }

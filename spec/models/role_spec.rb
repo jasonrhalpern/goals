@@ -23,4 +23,15 @@ describe Role do
     expect(create(:role_with_users).user_roles.count).to eq(2)
   end
 
+  it 'destroys the associated user roles' do
+    role = create(:role_with_users)
+    user_role_count = role.user_roles.count
+    expect{ role.destroy }.to change{ UserRole.count }.by(-user_role_count)
+  end
+
+  it 'does not destroy the associated users' do
+    role = create(:role_with_users)
+    expect{ role.destroy }.not_to change{ User.count }
+  end
+
 end

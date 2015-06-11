@@ -44,4 +44,20 @@ FactoryGirl.define do
     end
   end
 
+  factory :user_with_roles, parent: :user do
+    transient do
+      roles_count 3
+    end
+
+    after(:create) do |user, evaluator|
+      create_list(:user_role, evaluator.roles_count, user: user)
+    end
+  end
+
+  factory :user_with_location, parent: :user do
+    after(:build) do |user|
+      user.location ||= build(:location, :user => user)
+    end
+  end
+
 end
