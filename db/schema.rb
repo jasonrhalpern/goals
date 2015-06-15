@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150609193820) do
+ActiveRecord::Schema.define(version: 20150615184327) do
 
   create_table "comments", force: true do |t|
     t.string   "content"
@@ -103,6 +103,17 @@ ActiveRecord::Schema.define(version: 20150609193820) do
 
   add_index "posts", ["goal_id"], name: "index_posts_on_goal_id"
 
+  create_table "relationships", force: true do |t|
+    t.integer  "followed_id"
+    t.integer  "follower_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "relationships", ["followed_id", "follower_id"], name: "index_relationships_on_followed_id_and_follower_id", unique: true
+  add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id"
+  add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id"
+
   create_table "roles", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -147,6 +158,8 @@ ActiveRecord::Schema.define(version: 20150609193820) do
     t.datetime "updated_at"
     t.string   "first_name"
     t.string   "last_name"
+    t.integer  "followers_count",        default: 0
+    t.integer  "following_count",        default: 0
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
