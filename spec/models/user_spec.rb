@@ -133,7 +133,7 @@ describe User do
     expect(User.active).to eq([user1])
   end
 
-  describe 'active?' do
+  describe '#active?' do
     it 'returns true if the user is active' do
       user = build(:user_with_active_payment)
       expect(user.active?).to be_truthy
@@ -145,7 +145,7 @@ describe User do
     end
   end
 
-  describe 'pending?' do
+  describe '#pending?' do
     it 'returns true if the user is pending' do
       user = build(:user)
       expect(user.pending?).to be_truthy
@@ -157,7 +157,7 @@ describe User do
     end
   end
 
-  describe 'canceled?' do
+  describe '#canceled?' do
     it 'returns true if the user is canceled' do
       payment = build(:payment, :stripe_sub_token => nil)
       user = build(:user, :payment => payment)
@@ -171,7 +171,7 @@ describe User do
     end
   end
 
-  describe 'deactivated?' do
+  describe '#deactivated?' do
     it 'returns true if the user is deactivated' do
       user = build(:user_with_inactive_payment)
       expect(user.deactivated?).to be_truthy
@@ -181,6 +181,40 @@ describe User do
       user = build(:user_with_active_payment)
       expect(user.deactivated?).to be_falsey
     end
+  end
+
+  describe '#follow' do
+    it 'creates a relationship with another user' do
+      user1, user2 = create(:user), create(:user)
+      expect(user1.following?(user2)).to be_falsey
+      user1.follow(user2)
+      expect(user1.following?(user2)).to be_truthy
+    end
+  end
+
+  describe '#unfollow' do
+    it 'destroys a relationship with another user' do
+      user1, user2 = create(:user), create(:user)
+      user1.follow(user2)
+      expect(user1.following?(user2)).to be_truthy
+      user1.unfollow(user2)
+      expect(user1.following?(user2)).to be_falsey
+    end
+
+  end
+
+  describe '#following' do
+    it 'returns true if a user is following another user' do
+      user1, user2 = create(:user), create(:user)
+      user1.follow(user2)
+      expect(user1.following?(user2)).to be_truthy
+    end
+
+    it 'returns false if a user is not following another user' do
+      user1, user2 = create(:user), create(:user)
+      expect(user1.following?(user2)).to be_falsey
+    end
+
   end
 
 end

@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
   end
 
   def follow(other_user)
-    return if following?(user)
+    return if following?(other_user)
     active_relationships.create(followed_id: other_user.id)
   end
 
