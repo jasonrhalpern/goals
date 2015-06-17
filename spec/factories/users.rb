@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :user do
+  factory :user, aliases: [:follower, :followed] do
     first_name 'Steve'
     last_name 'Jones'
     sequence(:email) { |n| "person#{n}@aol.com" }
@@ -57,6 +57,26 @@ FactoryGirl.define do
   factory :user_with_location, parent: :user do
     after(:build) do |user|
       user.location ||= build(:location, :user => user)
+    end
+  end
+
+  factory :user_with_followings, parent: :user do
+    transient do
+      following_count 5
+    end
+
+    after(:create) do |user, evaluator|
+      create_list(:relationship, evaluator.following_count, follower: user)
+    end
+  end
+
+  factory :user_with_followers, parent: :user do
+    transient do
+      followers_count 4
+    end
+
+    after(:create) do |user, evaluator|
+      create_list(:relationship, evaluator.followers_count, followed: user)
     end
   end
 

@@ -88,6 +88,44 @@ describe User do
     expect{ user.destroy }.to change{ Payment.count }.by(-1)
   end
 
+  it 'is following 5 users' do
+    expect(create(:user_with_followings).following.count).to eq(5)
+  end
+
+  it 'has a counter cache for following' do
+    user1, user2 = create(:user), create(:user)
+    expect{ user1.active_relationships.create(followed_id: user2.id) }.to change { User.first.following_count }.by(1)
+  end
+
+  it 'destroys the associated relationships in which the user is the follower' do
+    user = create(:user_with_followings)
+    expect{ user.destroy }.to change{ Relationship.count }.by(-5)
+  end
+
+  it 'does not destroy the associated followed users' do
+    user = create(:user_with_followings)
+    expect{ user.destroy }.to change{ User.count }.by(-1)
+  end
+
+  it 'has 4 followers' do
+    expect(create(:user_with_followers).followers.count).to eq(4)
+  end
+
+  it 'has a counter cache for followers' do
+    user1, user2 = create(:user), create(:user)
+    expect{ user2.active_relationships.create(followed_id: user1.id) }.to change { User.first.followers_count }.by(1)
+  end
+
+  it 'destroys the associated relationships in which the user is being followed' do
+    user = create(:user_with_followers)
+    expect{ user.destroy }.to change{ Relationship.count }.by(-4)
+  end
+
+  it 'does not destroy the associated following users' do
+    user = create(:user_with_followers)
+    expect{ user.destroy }.to change{ User.count }.by(-1)
+  end
+
   it 'returns a list of users with active payments' do
     user1 = create(:user_with_active_payment)
     user2 = create(:user_with_inactive_payment)
