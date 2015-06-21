@@ -18,11 +18,14 @@ class User < ActiveRecord::Base
 
   validates :first_name, :last_name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: Devise::email_regexp }
+  validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :password, presence: true, confirmation: true, length: { in: 6..20 }, if: :password_required?
-  validate :password_complexity
+  validate :password_complexity, :username_complexity
 
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :lockable
+
+  attr_accessor :login
 
   def password_complexity
     if password.present? and not password.match(/^(?=.*[\d[!@#$%\^*()_\-=?|;:.,<>]])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%\^*()_\-=?|;:.,<>]*$/)
@@ -32,6 +35,13 @@ class User < ActiveRecord::Base
 
   def password_required?
     !password.nil? || !password_confirmation.nil?
+  end
+
+  #can only contain alphanumeric characters (letters A-Z, numbers 0-9) and underscores
+  def username_complexity
+    if username.present? and not username.match(/^(\w){2,15}$/)
+      errors.add :username, 'Usernames can only contain alphanumeric characters (letters A-Z, numbers 0-9) and underscores.'
+    end
   end
 
   def has_role?(role_sym)
@@ -70,6 +80,15 @@ class User < ActiveRecord::Base
 
   def following?(other_user)
     following.include?(other_user)
+  end
+
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions.to_hash).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+    else
+      where(conditions.to_hash).first
+    end
   end
 
 end

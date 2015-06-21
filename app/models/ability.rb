@@ -16,6 +16,7 @@ class Ability
       can :crud, Post, :goal => { :user_id => user.id }
       can [:create, :destroy], Comment, :user_id => user.id
       can :create, Tag
+      can [:create, :destroy], Relationship, :follower_id => user.id
     end
   end
 end

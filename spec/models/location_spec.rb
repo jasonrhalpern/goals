@@ -7,7 +7,7 @@ describe Location do
   end
 
   it 'is invalid without an address' do
-    expect(build_stubbed(:location, address_line_1: nil)).to have(1).errors_on(:address_line_1)
+    expect(build_stubbed(:location, address: nil)).to have(1).errors_on(:address)
   end
 
   it 'is invalid without a city or state' do

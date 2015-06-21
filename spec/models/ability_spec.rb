@@ -56,6 +56,17 @@ describe 'Ability' do
     it "can create tags" do
       assert @ability.can?(:create, Tag.new)
     end
+
+    it "can create and destroy relationships in which the user is the follower" do
+      assert @ability.can?(:create, Relationship.new(:follower => @user))
+      assert @ability.can?(:destroy, Relationship.new(:follower => @user))
+      assert @ability.cannot?(:create, Relationship.new(:followed => @user))
+      assert @ability.cannot?(:destroy, Relationship.new(:followed => @user))
+      assert @ability.cannot?(:create, Relationship.new(:follower => @user_two))
+      assert @ability.cannot?(:destroy, Relationship.new(:follower => @user_two))
+      assert @ability.cannot?(:create, Relationship.new(:followed => @user_two))
+      assert @ability.cannot?(:destroy, Relationship.new(:followed => @user_two))
+    end
   end
 
   describe 'Admin' do
@@ -110,6 +121,11 @@ describe 'Ability' do
 
     it "can create tags" do
       assert @ability.can?(:create, Tag.new)
+    end
+
+    it "can create and destroy relationships" do
+      assert @ability.can?(:create, Relationship.new)
+      assert @ability.can?(:destroy, Relationship.new)
     end
 
   end

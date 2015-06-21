@@ -1,8 +1,8 @@
 class Location < ActiveRecord::Base
-  geocoded_by :address
+  geocoded_by :full_address
   belongs_to :user, inverse_of: :location
 
-  validates :address_line_1, :country, :user, presence: true
+  validates :address, :country, :user, presence: true
   validates :user_id, uniqueness: true
   validate :city_or_state?
 
@@ -10,8 +10,8 @@ class Location < ActiveRecord::Base
 
   private
 
-  def address
-    [address_line_1, address_line_2, city, state, country, zip_code].compact.join(', ')
+  def full_address
+    [address, city, state, country, zip_code].compact.join(', ')
   end
 
   def city_or_state?

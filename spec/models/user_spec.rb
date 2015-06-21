@@ -27,6 +27,31 @@ describe User do
     expect(build_stubbed(:user, email: 'test@aol.com')).to have(1).errors_on(:email)
   end
 
+  it 'is invalid without a username' do
+    expect(build_stubbed(:user, username: nil)).to have(1).errors_on(:username)
+  end
+
+  it 'is invalid without a unique username' do
+    user = create(:user)
+    expect(build_stubbed(:user, username: user.username.upcase)).to have(1).errors_on(:username)
+  end
+
+  it 'is invalid with a username that is too short' do
+    user = create(:user)
+    expect(build_stubbed(:user, username: 'd')).to have(1).errors_on(:username)
+  end
+
+  it 'is invalid with a username that is too long' do
+    user = create(:user)
+    expect(build_stubbed(:user, username: 'd' * 16)).to have(1).errors_on(:username)
+  end
+
+  it 'is invalid if the username doesn\'t have the right complexity' do
+    expect(build_stubbed(:user, username: 'd45KWE_j')).to be_valid
+    expect(build_stubbed(:user, username: 'd93er$#@')).to have(1).errors_on(:username)
+    expect(build_stubbed(:user, username: 'dy 89K')).to have(1).errors_on(:username)
+  end
+
   it 'is invalid with a password that is too short' do
     expect(build_stubbed(:user, password: 'pw4$')).to have(1).errors_on(:password)
   end
