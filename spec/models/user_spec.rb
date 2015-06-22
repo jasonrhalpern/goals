@@ -48,8 +48,18 @@ describe User do
 
   it 'is invalid if the username doesn\'t have the right complexity' do
     expect(build_stubbed(:user, username: 'd45KWE_j')).to be_valid
+    expect(build_stubbed(:user, username: 'jason')).to be_valid
     expect(build_stubbed(:user, username: 'd93er$#@')).to have(1).errors_on(:username)
     expect(build_stubbed(:user, username: 'dy 89K')).to have(1).errors_on(:username)
+    expect(build_stubbed(:user, username: '  ')).to have(1).errors_on(:username)
+    expect(build_stubbed(:user, username: '#$%(@#')).to have(1).errors_on(:username)
+    expect(build_stubbed(:user, username: 'admin')).to have(1).errors_on(:username)
+    expect(build_stubbed(:user, username: 'ADMIN')).to have(1).errors_on(:username)
+    expect(build_stubbed(:user, username: 'Admin')).to have(1).errors_on(:username)
+    expect(build_stubbed(:user, username: '4JAdmin')).to have(1).errors_on(:username)
+    expect(build_stubbed(:user, username: 'MADMIN9P')).to have(1).errors_on(:username)
+    expect(build_stubbed(:user, username: 'adminDFP')).to have(1).errors_on(:username)
+    expect(build_stubbed(:user, username: 'adMIN$&')).to have(2).errors_on(:username)
   end
 
   it 'is invalid with a password that is too short' do
