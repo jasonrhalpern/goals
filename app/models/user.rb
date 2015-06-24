@@ -40,10 +40,10 @@ class User < ActiveRecord::Base
   #can only contain alphanumeric characters (letters A-Z, numbers 0-9) and underscores
   def username_complexity
     if username.present? and not username.match(/^(\w){2,15}$/)
-      errors.add :username, 'Username can only contain alphanumeric characters (letters A-Z, numbers 0-9) and underscores.'
+      errors.add :username, 'can only contain alphanumeric characters (letters A-Z, numbers 0-9) and underscores'
     end
     if username.present? and username.match(/^(.*admin.*)$/i)
-      errors.add :username, 'Username cannot contain the word Admin.'
+      errors.add :username, 'cannot contain the word Admin'
     end
   end
 
