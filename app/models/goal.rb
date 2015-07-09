@@ -6,8 +6,9 @@ class Goal < ActiveRecord::Base
   belongs_to :user, inverse_of: :goals
 
   enum status: [ :active, :closed, :completed ] #DO NOT change this order
+  enum visibility: [ :publiced, :privated ] #DO NOT change this order
 
-  validates :status, :title, :description, :user, presence: true
+  validates :title, :description, :status, :visibility, :user, presence: true
   validates :title, length: { maximum: 200 }
   validate :one_active_goal_per_user
 

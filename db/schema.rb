@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150621164821) do
+ActiveRecord::Schema.define(version: 20150709132721) do
 
   create_table "comments", force: true do |t|
     t.string   "content"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20150621164821) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "visibility"
   end
 
   add_index "goals", ["user_id"], name: "index_goals_on_user_id"

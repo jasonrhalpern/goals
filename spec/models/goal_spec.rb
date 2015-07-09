@@ -22,6 +22,10 @@ describe Goal do
     expect(build_stubbed(:goal, status: nil)).to have(1).errors_on(:status)
   end
 
+  it 'is invalid without a visibility' do
+    expect(build_stubbed(:goal, visibility: nil)).to have(1).errors_on(:visibility)
+  end
+
   it 'is invalid without a user' do
     expect(build_stubbed(:goal, user: nil)).to have(1).errors_on(:user)
   end
