@@ -1,0 +1,22 @@
+<p>
+  <strong>Title:</strong>
+  <%= goal.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= goal.description %>
+</p>
+
+<p>
+  <strong>Visibility:</strong>
+  <%= goal.visibility.capitalize %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= goal.status.capitalize %>
+</p>
+
+<%= link_to 'Edit', edit_goal_path(goal) %>
+<%= link_to 'Delete', goal_path(goal), method: :delete, data: { confirm: 'Are you sure you want to delete this goal?' } %>

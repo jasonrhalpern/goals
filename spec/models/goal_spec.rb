@@ -11,11 +11,25 @@ describe Goal do
   end
 
   it 'is invalid if the title is too long' do
-    expect(build_stubbed(:goal, title: 'w3#ew' * 41)).to have(1).errors_on(:title)
+    expect(build_stubbed(:goal, title: 'w3#ew' * 21)).to have(1).errors_on(:title)
+  end
+
+  it 'is invalid if the title is not unique for this user' do
+    goal = create(:goal)
+    expect(build_stubbed(:goal, user: goal.user, title: goal.title)).to have(1).errors_on(:title)
   end
 
   it 'is invalid without a description' do
     expect(build_stubbed(:goal, description: nil)).to have(1).errors_on(:description)
+  end
+
+  it 'is invalid if the description is too long' do
+    expect(build_stubbed(:goal, description: 'w3#ew' * 81)).to have(1).errors_on(:description)
+  end
+
+  it 'is invalid if the description is not unique for this user' do
+    goal = create(:goal)
+    expect(build_stubbed(:goal, user: goal.user, description: goal.description)).to have(1).errors_on(:description)
   end
 
   it 'is invalid without a status' do

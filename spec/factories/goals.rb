@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :goal do
-    title 'I am running a marathon this year'
-    description 'I will do this by the end of January 2011!'
+    sequence(:title) { |n| "title#{n}" }
+    sequence(:description) { |n| "description#{n}" }
     visibility :publiced
     status :active
     user
