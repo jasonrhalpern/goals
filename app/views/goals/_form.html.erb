@@ -1,6 +1,16 @@
-<%= bootstrap_form_for [@user, @goal] do |f| %>
+<%= bootstrap_form_for @goal.new_record? ? [@user, @goal] : [@goal] do |f| %>
 
     <%= f.alert_message 'Please fix the errors below.' %>
+
+    <% unless @goal.new_record? %>
+        <div class="field">
+          <%= f.form_group :status, label: { text: 'Status' } do %>
+              <%= f.radio_button :status, 'active', checked: @goal.active?, label: 'Active' %>
+              <%= f.radio_button :status, 'closed', checked: @goal.closed?, label: 'Closed' %>
+              <%= f.radio_button :status, 'completed', checked: @goal.completed?, label: 'Completed' %>
+        <% end %>
+        </div>
+    <% end %>
 
     <div class="field">
       <%= f.text_field :title %>

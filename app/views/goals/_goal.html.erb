@@ -1,4 +1,9 @@
 <p>
+  <strong>Status:</strong>
+  <%= goal.status.capitalize %>
+</p>
+
+<p>
   <strong>Title:</strong>
   <%= goal.title %>
 </p>
@@ -11,11 +16,6 @@
 <p>
   <strong>Visibility:</strong>
   <%= goal.visibility.capitalize %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= goal.status.capitalize %>
 </p>
 
 <%= link_to 'Edit', edit_goal_path(goal) %>

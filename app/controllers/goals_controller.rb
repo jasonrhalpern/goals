@@ -1,6 +1,7 @@
 class GoalsController < ApplicationController
   load_and_authorize_resource :user
   load_and_authorize_resource :goal, :through => :user, :shallow => true
+  before_filter :set_user
 
   before_action :authenticate_user!
 
@@ -37,6 +38,12 @@ class GoalsController < ApplicationController
 
   def goal_params
     params.require(:goal).permit(:title, :description, :visibility, :status, :user_id)
+  end
+
+  protected
+
+  def set_user
+    @user ||= @goal.user
   end
 
 end
