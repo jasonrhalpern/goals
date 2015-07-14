@@ -26,10 +26,6 @@ describe Milestone do
     expect(build_stubbed(:milestone, title: 'heyyy' * 11)).to have(1).errors_on(:title)
   end
 
-  it 'is invalid without a reach by date' do
-    expect(build_stubbed(:milestone, reach_by_date: nil)).to have(1).errors_on(:reach_by_date)
-  end
-
   it 'is invalid without a goal' do
     expect(build_stubbed(:milestone, goal: nil)).to have(1).errors_on(:goal)
   end
