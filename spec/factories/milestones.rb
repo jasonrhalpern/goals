@@ -1,7 +1,8 @@
 FactoryGirl.define do
   factory :milestone do
     status :open
-    description 'My first 5k'
+    title 'My first 5k'
+    description 'Killing the runs'
     reach_by_date Date.tomorrow
     goal
   end

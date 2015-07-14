@@ -18,6 +18,10 @@ describe Post do
     expect(build_stubbed(:post, content: nil)).to have(1).errors_on(:content)
   end
 
+  it 'is invalid with content that is too long' do
+    expect(build_stubbed(:post, content: 'great' * 81)).to have(1).errors_on(:content)
+  end
+
   it 'is invalid without a goal' do
     expect(build_stubbed(:post, goal: nil)).to have(1).errors_on(:goal)
   end

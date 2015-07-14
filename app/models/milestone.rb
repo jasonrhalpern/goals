@@ -3,7 +3,8 @@ class Milestone < ActiveRecord::Base
 
   enum status: [ :open, :closed, :completed ] #DO NOT change this order
 
-  validates :status, :description, :reach_by_date, :goal, presence: true
+  validates :status, :title, :description, :reach_by_date, :goal, presence: true
+  validates :title, length: { maximum: 50 }
   validates :description, length: { maximum: 400 }
 
 end

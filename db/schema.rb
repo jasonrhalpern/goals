@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150709132721) do
+ActiveRecord::Schema.define(version: 20150714155616) do
 
   create_table "comments", force: true do |t|
     t.string   "content"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20150709132721) do
     t.integer  "goal_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
   end
 
   add_index "milestones", ["goal_id"], name: "index_milestones_on_goal_id"

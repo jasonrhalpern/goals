@@ -18,6 +18,14 @@ describe Milestone do
     expect(build_stubbed(:milestone, description: 'heyy' * 101)).to have(1).errors_on(:description)
   end
 
+  it 'is invalid without a title' do
+    expect(build_stubbed(:milestone, title: nil)).to have(1).errors_on(:title)
+  end
+
+  it 'is invalid with a title that is too long' do
+    expect(build_stubbed(:milestone, title: 'heyyy' * 11)).to have(1).errors_on(:title)
+  end
+
   it 'is invalid without a reach by date' do
     expect(build_stubbed(:milestone, reach_by_date: nil)).to have(1).errors_on(:reach_by_date)
   end
