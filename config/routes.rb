@@ -4,8 +4,10 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :users, :only => :show do
-    resources :goals, shallow: true
+  resources :users, :only => :show, shallow: true do
+    resources :goals, shallow: true do
+      resources :posts
+    end
   end
 
 end
