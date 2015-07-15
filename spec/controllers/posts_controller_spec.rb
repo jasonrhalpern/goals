@@ -40,7 +40,7 @@ describe PostsController do
         }.to change(Post, :count).by(1)
       end
 
-      it "redirects to goals#index" do
+      it "redirects to posts#index" do
         post :create, :goal_id => johns_goal, post: attributes_for(:post, :goal => johns_goal)
         expect(response).to redirect_to goal_posts_path(johns_goal)
       end
@@ -57,6 +57,75 @@ describe PostsController do
         post :create, :goal_id => johns_goal, post: attributes_for(:post, :goal => johns_goal, :content => nil)
         expect(response).to render_template("new")
       end
+    end
+  end
+
+  describe "GET #show" do
+    it "assigns the requested post to @post" do
+      get :show, :id => johns_post
+      expect(assigns(:post)).not_to be_nil
+    end
+
+    it "renders the :show template" do
+      get :show, :id => johns_post
+      expect(response).to render_template("show")
+    end
+  end
+
+  describe "GET #edit" do
+    it "assigns the requested post to @post" do
+      get :edit, :id => johns_post
+      expect(assigns(:post)).to eq(johns_post)
+    end
+
+    it "renders the :edit template" do
+      get :edit, :id => johns_post
+      expect(response).to render_template("edit")
+    end
+  end
+
+  describe "PATCH #update" do
+    context "with valid attributes" do
+      it "changes the post" do
+        patch :update, id: johns_post, post: attributes_for(:post, :content => 'My new post content')
+        johns_post.reload
+        expect(johns_post.content).to eq('My new post content')
+      end
+
+      it "redirects to the updated post" do
+        patch :update, id: johns_post, post: attributes_for(:post, :content => 'My new post content')
+        expect(response).to redirect_to post_path(johns_post)
+      end
+    end
+
+    context "with invalid attributes" do
+      it "does not change the post" do
+        patch :update, id: johns_post, post: attributes_for(:post, :title => nil, :content => 'My new post content')
+        johns_post.reload
+        expect(johns_post.content).to_not eq('My new post content')
+      end
+
+      it "re-renders the edit template" do
+        patch :update, id: johns_post, post: attributes_for(:post, :title => nil, :content => 'My new post content')
+        expect(response).to render_template("edit")
+      end
+    end
+  end
+
+  describe "DELETE #destroy" do
+    before(:each) do
+      @my_post = create(:post, :goal => johns_goal)
+    end
+
+    it "deletes the post" do
+      expect{
+        delete :destroy, id: @my_post
+      }.to change(Post, :count).by(-1)
+    end
+
+    it "redirects to posts#index" do
+      delete :destroy, id: @my_post
+      expect(response).to redirect_to goal_posts_path(johns_goal)
     end
   end
 
