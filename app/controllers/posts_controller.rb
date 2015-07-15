@@ -6,23 +6,37 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @posts = @posts.order(created_at: :desc)
   end
 
   def new
   end
 
   def create
+    if @post.save
+      redirect_to goal_posts_path(@goal), notice: 'This post was successfully saved.'
+    else
+      render 'new'
+    end
+  end
 
+  def show
   end
 
   def edit
   end
 
   def update
-
+    if @post.update_attributes(post_params)
+      redirect_to post_path(@post), notice: 'This post was successfully updated.'
+    else
+      render 'edit'
+    end
   end
 
   def destroy
+    @post.destroy
+    redirect_to goal_posts_path(@goal), notice: 'This post was deleted.'
   end
 
   def post_params

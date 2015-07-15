@@ -59,6 +59,18 @@ describe GoalsController do
     end
   end
 
+  describe "GET #show" do
+    it "assigns the requested goal to @goal" do
+      get :show, :id => johns_goal
+      expect(assigns(:goal)).not_to be_nil
+    end
+
+    it "renders the :show template" do
+      get :show, :id => johns_goal
+      expect(response).to render_template("show")
+    end
+  end
+
   describe "GET #edit" do
     it "assigns the requested goal to @goal" do
       get :edit, :id => johns_goal
