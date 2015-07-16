@@ -1,0 +1,17 @@
+<%= bootstrap_form_for @post.new_record? ? [@goal, @post] : [@post] do |f| %>
+
+    <%= f.alert_message 'Please fix the errors below.' %>
+
+    <div class="field">
+      <%= f.text_field :title %>
+    </div>
+
+    <div class="field">
+      <%= f.text_area :content %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit 'Save' %>
+    </div>
+
+<% end %>

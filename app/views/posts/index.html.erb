@@ -1,0 +1,8 @@
+<h1>Posts</h1>
+<%= link_to 'Add Post', new_goal_post_path(@goal) %>
+
+<% if @posts.blank? %>
+    <h4>You do not currently have any posts</h4>
+<% else %>
+    <%= render @posts %>
+<% end %>
