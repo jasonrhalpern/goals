@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :users, :only => :show, shallow: true do
     resources :goals, shallow: true do
       resources :posts
+      resources :milestones
     end
   end
 
