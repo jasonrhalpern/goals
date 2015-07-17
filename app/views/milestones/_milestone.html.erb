@@ -1,0 +1,17 @@
+<p>
+  <strong>Due Date:</strong>
+  <%= display_full_date(milestone.reach_by_date) %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= milestone.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= milestone.description %>
+</p>
+
+<%= link_to 'Edit', edit_milestone_path(milestone) %>
+<%= link_to 'Delete', milestone_path(milestone), method: :delete, data: { confirm: 'Are you sure you want to delete this milestone?' } %>

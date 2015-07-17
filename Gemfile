@@ -13,6 +13,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'bootstrap-sass'
 gem 'bootstrap_form'
 gem 'autoprefixer-rails'
+gem 'bootstrap-datepicker-rails'
 
 gem 'jquery-rails'
 

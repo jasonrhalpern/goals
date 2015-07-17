@@ -1,0 +1,8 @@
+<h1>Milestones</h1>
+<%= link_to 'Add Milestone', new_goal_milestone_path(@goal) %>
+
+<% if @milestones.blank? %>
+    <h4>You do not currently have any milestones</h4>
+<% else %>
+    <%= render @milestones %>
+<% end %>
