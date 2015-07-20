@@ -250,6 +250,11 @@ describe User do
       expect(user1.following?(user2)).to be_falsey
     end
 
+    it 'returns the name of the user' do
+      user = build(:user)
+      expect(user.name).to eq(user.first_name + ' ' + user.last_name)
+    end
+
   end
 
 end

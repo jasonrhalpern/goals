@@ -1,0 +1,8 @@
+<% if @comment.errors.any? %>
+    $("#comment_errors-<%= post.id %>").show();
+    $("#comment_errors-<%= post.id %>").html("<%= @comment.errors.full_messages.join(', ') %>");
+<% else %>
+    $("#comment_errors-<%= post.id %>").hide();
+    $("#comment_content-<%= post.id %>").val('');
+    $("#comments-<%= post.id %>").prepend("<%= j render @comment %>");
+<% end %>
