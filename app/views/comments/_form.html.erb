@@ -1,10 +1,10 @@
 <%= bootstrap_form_for [post, Comment.new], remote: true do |f| %>
 
     <div class="field">
-      <%= f.text_field :content, label: 'Comment' %>
+      <%= f.text_field :content, label: 'Comment', id: "comment-content-#{post.id}" %>
     </div>
 
-    <div id="comment_errors-<%= post.id %>" style="color:#b94a48"></div>
+    <div id="comment-errors-<%= post.id %>" style="color:#b94a48"></div>
 
     <div class="actions">
       <%= f.submit 'Submit' %>

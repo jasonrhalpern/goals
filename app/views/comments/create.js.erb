@@ -1,8 +1,8 @@
 <% if @comment.errors.any? %>
-    $("#comment_errors-<%= post.id %>").show();
-    $("#comment_errors-<%= post.id %>").html("<%= @comment.errors.full_messages.join(', ') %>");
+    $("#comment-errors-<%= @comment.post_id %>").show();
+    $("#comment-errors-<%= @comment.post_id %>").html("<%= @comment.errors.full_messages.join(', ') %>");
 <% else %>
-    $("#comment_errors-<%= post.id %>").hide();
-    $("#comment_content-<%= post.id %>").val('');
-    $("#comments-<%= post.id %>").prepend("<%= j render @comment %>");
+    $("#comment-errors-<%= @comment.post_id %>").hide();
+    $("#comment-content-<%= @comment.post_id %>").val('');
+    $("#comments-<%= @comment.post_id %>").prepend("<%= j render @comment %>");
 <% end %>
