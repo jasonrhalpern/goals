@@ -25,6 +25,8 @@ gem 'spring',        group: :development
 gem 'devise'
 gem 'cancancan', '~> 1.10'
 
+gem 'kaminari'
+
 gem 'geocoder'
 
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'

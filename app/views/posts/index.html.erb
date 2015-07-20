@@ -1,4 +1,4 @@
-<h1>Posts</h1>
+<h1>Journal</h1>
 <%= link_to 'Add Post', new_goal_post_path(@goal) %>
 
 <% if @posts.blank? %>
@@ -6,3 +6,5 @@
 <% else %>
     <%= render @posts %>
 <% end %>
+
+<%= paginate @posts %>

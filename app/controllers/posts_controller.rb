@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @posts = @posts.order(created_at: :desc)
+    @posts = @posts.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def new

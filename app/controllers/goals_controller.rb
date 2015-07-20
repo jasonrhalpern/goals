@@ -6,7 +6,7 @@ class GoalsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @goals = @goals.order(created_at: :desc)
+    @goals = @goals.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def new

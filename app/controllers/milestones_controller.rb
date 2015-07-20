@@ -6,7 +6,7 @@ class MilestonesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @milestones = @milestones.order(reach_by_date: :desc)
+    @milestones = @milestones.order(reach_by_date: :desc).page(params[:page]).per(10)
   end
 
   def new

@@ -1,4 +1,4 @@
-<h1>Milestones</h1>
+<h1>Plan</h1>
 <%= link_to 'Add Milestone', new_goal_milestone_path(@goal) %>
 
 <% if @milestones.blank? %>
@@ -6,3 +6,5 @@
 <% else %>
     <%= render @milestones %>
 <% end %>
+
+<%= paginate @milestones %>
