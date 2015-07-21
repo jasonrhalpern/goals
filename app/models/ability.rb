@@ -4,7 +4,6 @@ class Ability
   def initialize(user)
     user ||= User.new
     alias_action :create, :read, :update, :destroy, :to => :crud
-    alias_action :create, :update, :destroy, :to => :cud
 
     if user.has_role? :admin
       can :manage, :all
@@ -18,6 +17,7 @@ class Ability
       can [:create, :destroy], Comment, :user_id => user.id
       can :create, Tag
       can [:create, :destroy], Relationship, :follower_id => user.id
+
       can :read, Goal, :visibility => 'publiced'
       can :read, Milestone, :goal => { :visibility => 'publiced' }
       can :read, Post, :goal => { :visibility => 'publiced' }

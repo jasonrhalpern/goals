@@ -30,9 +30,9 @@ describe 'Ability' do
     end
 
     it "can crud his own goals, but can't create, update or delete the goals of others" do
-      assert @ability.can?(:crud, Goal.new(:user => @user))
+      assert @ability.can?(:crud, @goal)
       assert @ability.cannot?([:create, :update, :delete], Goal.new)
-      assert @ability.cannot?([:create, :update, :delete], Goal.new(:user => @user_two))
+      assert @ability.cannot?([:create, :update, :delete], @goal_two)
     end
 
     it "can read the public goals of other users but not the private ones" do
