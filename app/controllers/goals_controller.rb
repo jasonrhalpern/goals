@@ -1,7 +1,8 @@
 class GoalsController < ApplicationController
-  load_resource :user
+  load_and_authorize_resource :user
   load_and_authorize_resource :goal, :through => :user, :shallow => true
   before_filter :set_user
+  skip_authorize_resource :user, :only => :index
 
   before_action :authenticate_user!, :except => [:index, :show]
 
