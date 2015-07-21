@@ -9,7 +9,7 @@ class Ability
     if user.has_role? :admin
       can :manage, :all
     else
-      can :cud, User, :id => user.id
+      can :crud, User, :id => user.id
       can :crud, Location, :user_id => user.id
       can :crud, Payment, :user_id => user.id
       can :crud, Goal, :user_id => user.id
@@ -18,7 +18,6 @@ class Ability
       can [:create, :destroy], Comment, :user_id => user.id
       can :create, Tag
       can [:create, :destroy], Relationship, :follower_id => user.id
-      can :read, User
       can :read, Goal, :visibility => 'publiced'
       can :read, Milestone, :goal => { :visibility => 'publiced' }
       can :read, Post, :goal => { :visibility => 'publiced' }

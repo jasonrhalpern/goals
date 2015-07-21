@@ -11,10 +11,10 @@ describe 'Ability' do
       @private_goal = build_stubbed(:private_goal, user: @user_two)
     end
 
-    it "can cud himself, but not other users" do
-      assert @ability.can?(:cud, @user)
-      assert @ability.cannot?(:cud, User.new)
-      assert @ability.cannot?(:cud, @user_two)
+    it "can crud himself, but not other users" do
+      assert @ability.can?(:crud, @user)
+      assert @ability.cannot?(:crud, User.new)
+      assert @ability.cannot?(:crud, @user_two)
     end
 
     it "can crud his own location, but not the location of other users" do
