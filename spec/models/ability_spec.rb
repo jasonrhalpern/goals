@@ -46,11 +46,22 @@ describe 'Ability' do
       assert @ability.cannot?(:cud, Post.new(:goal => @goal_two))
     end
 
-    it "can read all users, goals, posts and milestones" do
+    it "can read all users, posts and milestones" do
       assert @ability.can?(:read, User.new)
-      assert @ability.can?(:read, Goal.new)
       assert @ability.can?(:read, Post.new)
       assert @ability.can?(:read, Milestone.new)
+    end
+
+    it "can only read a goal if its the users goal or if its visibility is public" do
+      my_public_goal = build(:goal, user: @user)
+      my_private_goal = build(:private_goal, user: @user)
+      other_users_public_goal = build(:goal, user: @user_two)
+      other_users_private_goal = build(:private_goal, user: @user_two)
+
+      assert @ability.can?(:read, my_public_goal)
+      assert @ability.can?(:read, my_private_goal)
+      assert @ability.can?(:read, other_users_public_goal)
+      assert @ability.cannot?(:read, other_users_private_goal)
     end
 
     it "can create and destroy his own comments, but not those of other users" do

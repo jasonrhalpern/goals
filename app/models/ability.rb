@@ -18,7 +18,9 @@ class Ability
       can [:create, :destroy], Comment, :user_id => user.id
       can :create, Tag
       can [:create, :destroy], Relationship, :follower_id => user.id
-      can :read, [User, Goal, Milestone, Post]
+      can :read, [User, Milestone, Post]
+      can :read, Goal, :user_id => user.id
+      can :read, Goal, :visibility => 'publiced'
     end
   end
 end

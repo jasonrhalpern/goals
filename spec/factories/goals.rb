@@ -7,6 +7,10 @@ FactoryGirl.define do
     user
   end
 
+  factory :private_goal, parent: :goal  do
+    visibility :privated
+  end
+
   factory :completed_goal, parent: :goal do
     status :closed
   end
