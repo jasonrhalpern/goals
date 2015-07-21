@@ -10,10 +10,10 @@ describe 'Ability' do
       @goal_two = create(:goal, :user => @user_two)
     end
 
-    it "can crud himself, but not other users" do
-      assert @ability.can?(:crud, @user)
-      assert @ability.cannot?(:crud, User.new)
-      assert @ability.cannot?(:crud, @user_two)
+    it "can cud himself, but not other users" do
+      assert @ability.can?(:cud, @user)
+      assert @ability.cannot?(:cud, User.new)
+      assert @ability.cannot?(:cud, @user_two)
     end
 
     it "can crud his own location, but not the location of other users" do
@@ -28,22 +28,29 @@ describe 'Ability' do
       assert @ability.cannot?(:crud, Payment.new(:user => @user_two))
     end
 
-    it "can crud his own goals, but not the goals of other users" do
-      assert @ability.can?(:crud, Goal.new(:user => @user))
-      assert @ability.cannot?(:crud, Goal.new)
-      assert @ability.cannot?(:crud, Goal.new(:user => @user_two))
+    it "can cud his own goals, but not the goals of other users" do
+      assert @ability.can?(:cud, Goal.new(:user => @user))
+      assert @ability.cannot?(:cud, Goal.new)
+      assert @ability.cannot?(:cud, Goal.new(:user => @user_two))
     end
 
-    it "can crud a milestone of his own goal, but not the milestones of others" do
-      assert @ability.can?(:crud, Milestone.new(:goal => @goal))
-      assert @ability.cannot?(:crud, Milestone.new)
-      assert @ability.cannot?(:crud, Milestone.new(:goal => @goal_two))
+    it "can cud a milestone of his own goal, but not the milestones of others" do
+      assert @ability.can?(:cud, Milestone.new(:goal => @goal))
+      assert @ability.cannot?(:cud, Milestone.new)
+      assert @ability.cannot?(:cud, Milestone.new(:goal => @goal_two))
     end
 
-    it "can crud a post of his own goal, but not the posts of others" do
-      assert @ability.can?(:crud, Post.new(:goal => @goal))
-      assert @ability.cannot?(:crud, Post.new)
-      assert @ability.cannot?(:crud, Post.new(:goal => @goal_two))
+    it "can cud a post of his own goal, but not the posts of others" do
+      assert @ability.can?(:cud, Post.new(:goal => @goal))
+      assert @ability.cannot?(:cud, Post.new)
+      assert @ability.cannot?(:cud, Post.new(:goal => @goal_two))
+    end
+
+    it "can read all users, goals, posts and milestones" do
+      assert @ability.can?(:read, User.new)
+      assert @ability.can?(:read, Goal.new)
+      assert @ability.can?(:read, Post.new)
+      assert @ability.can?(:read, Milestone.new)
     end
 
     it "can create and destroy his own comments, but not those of other users" do

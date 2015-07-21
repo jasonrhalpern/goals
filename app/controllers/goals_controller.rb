@@ -3,7 +3,7 @@ class GoalsController < ApplicationController
   load_and_authorize_resource :goal, :through => :user, :shallow => true
   before_filter :set_user
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :except => [:index, :show]
 
   def index
     @goals = @goals.order(created_at: :desc).page(params[:page]).per(10)

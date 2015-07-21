@@ -3,7 +3,7 @@ class MilestonesController < ApplicationController
   load_and_authorize_resource :milestone, :through => :goal, :shallow => true
   before_filter :set_goal
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :except => [:index, :show]
 
   def index
     @milestones = @milestones.order(reach_by_date: :desc).page(params[:page]).per(10)

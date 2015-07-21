@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   load_and_authorize_resource :post, :through => :goal, :shallow => true
   before_filter :set_goal
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :except => [:index, :show]
 
   def index
     @posts = @posts.order(created_at: :desc).page(params[:page]).per(10)
