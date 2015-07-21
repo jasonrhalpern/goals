@@ -6,8 +6,9 @@ describe 'Ability' do
       @user = create(:user)
       @user_two = create(:user)
       @ability = Ability.new(@user)
-      @goal = create(:goal, :user => @user)
-      @goal_two = create(:goal, :user => @user_two)
+      @goal = build_stubbed(:goal, :user => @user)
+      @goal_two = build_stubbed(:goal, :user => @user_two)
+      @private_goal = build_stubbed(:private_goal, user: @user_two)
     end
 
     it "can cud himself, but not other users" do
@@ -28,40 +29,43 @@ describe 'Ability' do
       assert @ability.cannot?(:crud, Payment.new(:user => @user_two))
     end
 
-    it "can cud his own goals, but not the goals of other users" do
-      assert @ability.can?(:cud, Goal.new(:user => @user))
-      assert @ability.cannot?(:cud, Goal.new)
-      assert @ability.cannot?(:cud, Goal.new(:user => @user_two))
+    it "can crud his own goals, but can't create, update or delete the goals of others" do
+      assert @ability.can?(:crud, Goal.new(:user => @user))
+      assert @ability.cannot?([:create, :update, :delete], Goal.new)
+      assert @ability.cannot?([:create, :update, :delete], Goal.new(:user => @user_two))
     end
 
-    it "can cud a milestone of his own goal, but not the milestones of others" do
-      assert @ability.can?(:cud, Milestone.new(:goal => @goal))
-      assert @ability.cannot?(:cud, Milestone.new)
-      assert @ability.cannot?(:cud, Milestone.new(:goal => @goal_two))
+    it "can read the public goals of other users but not the private ones" do
+      assert @ability.can?(:read, @goal_two)
+      assert @ability.cannot?(:read, @private_goal)
     end
 
-    it "can cud a post of his own goal, but not the posts of others" do
-      assert @ability.can?(:cud, Post.new(:goal => @goal))
-      assert @ability.cannot?(:cud, Post.new)
-      assert @ability.cannot?(:cud, Post.new(:goal => @goal_two))
+    it "can crud a milestone of his own goal, but can't create, update or delete the milestones of others" do
+      assert @ability.can?(:crud, Milestone.new(:goal => @goal))
+      assert @ability.cannot?([:create, :update, :delete], Milestone.new)
+      assert @ability.cannot?([:create, :update, :delete], Milestone.new(:goal => @goal_two))
     end
 
-    it "can read all users, posts and milestones" do
-      assert @ability.can?(:read, User.new)
-      assert @ability.can?(:read, Post.new)
-      assert @ability.can?(:read, Milestone.new)
+    it "can read the public milestones of other users but not the private ones" do
+      public_milestone = build(:milestone, goal: @goal_two)
+      private_milestone = build(:milestone, goal: @private_goal)
+
+      assert @ability.can?(:read, public_milestone)
+      assert @ability.cannot?(:read, private_milestone)
     end
 
-    it "can only read a goal if its the users goal or if its visibility is public" do
-      my_public_goal = build(:goal, user: @user)
-      my_private_goal = build(:private_goal, user: @user)
-      other_users_public_goal = build(:goal, user: @user_two)
-      other_users_private_goal = build(:private_goal, user: @user_two)
+    it "can crud a post of his own goal, but can't create, update or delete the posts of others" do
+      assert @ability.can?(:crud, Post.new(:goal => @goal))
+      assert @ability.cannot?([:create, :update, :delete], Post.new)
+      assert @ability.cannot?([:create, :update, :delete], Post.new(:goal => @goal_two))
+    end
 
-      assert @ability.can?(:read, my_public_goal)
-      assert @ability.can?(:read, my_private_goal)
-      assert @ability.can?(:read, other_users_public_goal)
-      assert @ability.cannot?(:read, other_users_private_goal)
+    it "can read the public posts of other users but not the private ones" do
+      public_post = build(:post, goal: @goal_two)
+      private_post = build(:post, goal: @private_goal)
+
+      assert @ability.can?(:read, public_post)
+      assert @ability.cannot?(:read, private_post)
     end
 
     it "can create and destroy his own comments, but not those of other users" do
