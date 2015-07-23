@@ -9,7 +9,7 @@ class Goal < ActiveRecord::Base
   enum visibility: [ :publiced, :privated ] #DO NOT change this order
 
   validates :title, :description, :status, :visibility, :user, presence: true
-  validates :title, length: { maximum: 100 }, uniqueness: { scope: :user_id }
+  validates :title, length: { maximum: 80 }, uniqueness: { scope: :user_id }
   validates :description, length: { maximum: 400 }, uniqueness: { scope: :user_id }
   validate :one_active_goal_per_user
 

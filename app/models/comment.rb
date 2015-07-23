@@ -5,5 +5,5 @@ class Comment < ActiveRecord::Base
   validates :content, :post, :user, presence: true
   validates :content, length: { maximum: 300 }
 
-  delegate :name, to: :user, prefix: :user
+  delegate :username, to: :user
 end

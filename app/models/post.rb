@@ -3,7 +3,7 @@ class Post < ActiveRecord::Base
   has_many :comments, inverse_of: :post, dependent: :destroy
 
   validates :title, :content, :goal, presence: true
-  validates :title, length: { maximum: 50 }
+  validates :title, length: { maximum: 80 }
   validates :content, length: { maximum: 400 }
 
 end

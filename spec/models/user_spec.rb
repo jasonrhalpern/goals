@@ -252,7 +252,7 @@ describe User do
 
     it 'returns the name of the user' do
       user = build(:user)
-      expect(user.name).to eq(user.first_name + ' ' + user.last_name)
+      expect(user.full_name).to eq(user.first_name + ' ' + user.last_name)
     end
 
   end

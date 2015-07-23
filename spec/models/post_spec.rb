@@ -11,7 +11,7 @@ describe Post do
   end
 
   it 'is invalid with a title that is too long' do
-    expect(build_stubbed(:post, title: 'great' * 11)).to have(1).errors_on(:title)
+    expect(build_stubbed(:post, title: 'great' * 17)).to have(1).errors_on(:title)
   end
 
   it 'is invalid without content' do
