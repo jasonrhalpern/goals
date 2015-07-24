@@ -10,17 +10,19 @@ class Goal < ActiveRecord::Base
 
   validates :title, :description, :status, :visibility, :user, presence: true
   validates :title, length: { maximum: 80 }, uniqueness: { scope: :user_id }
-  validates :description, length: { maximum: 400 }, uniqueness: { scope: :user_id }
+  validates :description, length: { maximum: 400 }
   validate :two_active_goals_per_user
 
   private
 
   def two_active_goals_per_user
     if user.present? && status.present? && status == 'active'
-      active_goal_count = Goal.where(user_id: user.id, status: Goal.statuses[:active]).count
-      if active_goal_count == 2 && new_record?
-        errors.add :base, 'You can only have two active goals at a time. Please complete or close an active goal before
+      active_goals = Goal.where(user_id: user.id, status: Goal.statuses[:active])
+      if active_goals.count == 2
+        if new_record? || (!active_goals.map(&:id).include?(self.id))
+          errors.add :base, 'You can only have two active goals at a time. Please complete or close an active goal before
                           starting a new one.'
+        end
       end
     end
   end

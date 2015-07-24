@@ -27,11 +27,6 @@ describe Goal do
     expect(build_stubbed(:goal, description: 'w3#ew' * 81)).to have(1).errors_on(:description)
   end
 
-  it 'is invalid if the description is not unique for this user' do
-    goal = create(:goal)
-    expect(build_stubbed(:goal, user: goal.user, description: goal.description)).to have(1).errors_on(:description)
-  end
-
   it 'is invalid without a status' do
     expect(build_stubbed(:goal, status: nil)).to have(1).errors_on(:status)
   end
