@@ -1,5 +1,7 @@
 <h1>Goals</h1>
-<%= link_to 'Add Goal', new_user_goal_path(@user) %>
+<% if can? :create, Goal.new(user: @user) %>
+    <%= link_to 'Add Goal', new_user_goal_path(@user) %>
+<% end %>
 
 <% if @goals.blank? %>
     <h4>You do not currently have any goals</h4>

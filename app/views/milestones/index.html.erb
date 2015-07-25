@@ -1,5 +1,7 @@
-<h1>Plan</h1>
-<%= link_to 'Add Milestone', new_goal_milestone_path(@goal) %>
+<h1>Action Plan</h1>
+<% if can? :create, Milestone.new(goal: @goal) %>
+    <%= link_to 'Add Milestone', new_goal_milestone_path(@goal) %>
+<% end %>
 
 <% if @milestones.blank? %>
     <h4>You do not currently have any milestones</h4>

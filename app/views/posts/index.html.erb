@@ -1,5 +1,7 @@
 <h1>Progress</h1>
-<%= link_to 'Add Post', new_goal_post_path(@goal) %>
+<% if can? :create, Post.new(goal: @goal) %>
+    <%= link_to 'Add Post', new_goal_post_path(@goal) %>
+<% end %>
 
 <% if @posts.blank? %>
     <h4>You do not currently have any posts</h4>

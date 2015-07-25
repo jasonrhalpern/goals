@@ -18,5 +18,10 @@
   <%= milestone.description %>
 </p>
 
-<%= link_to 'Edit', edit_milestone_path(milestone) %>
-<%= link_to 'Delete', milestone_path(milestone), method: :delete, data: { confirm: 'Are you sure you want to delete this milestone?' } %>
+<% if can? :update, milestone %>
+    <%= link_to 'Edit', edit_milestone_path(milestone) %>
+<% end %>
+
+<% if can? :destroy, milestone %>
+    <%= link_to 'Delete', milestone_path(milestone), method: :delete, data: { confirm: 'Are you sure you want to delete this milestone?' } %>
+<% end %>

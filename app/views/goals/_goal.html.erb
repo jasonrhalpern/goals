@@ -18,7 +18,11 @@
   <%= display_visibility(goal.visibility) %>
 </p>
 
-<%= link_to 'Edit', edit_goal_path(goal) %>
+<% if can? :update, goal %>
+    <%= link_to 'Edit', edit_goal_path(goal) %>
+<% end %>
+<% if can? :destroy, goal %>
+    <%= link_to 'Delete', goal_path(goal), method: :delete, data: { confirm: 'Are you sure you want to delete this goal?' } %>
+<% end %>
 <%= link_to 'Progress',  goal_posts_path(goal) %>
-<%= link_to 'Plan',  goal_milestones_path(goal) %>
-<%= link_to 'Delete', goal_path(goal), method: :delete, data: { confirm: 'Are you sure you want to delete this goal?' } %>
+<%= link_to 'Action Plan',  goal_milestones_path(goal) %>

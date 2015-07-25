@@ -12,9 +12,12 @@
   <%= post.content %>
 </p>
 
-<%= link_to 'Edit', edit_post_path(post) %>
-<%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Are you sure you want to delete this post?' } %>
-
+<% if can? :update, post %>
+    <%= link_to 'Edit', edit_post_path(post) %>
+<% end %>
+<% if can? :destroy, post %>
+    <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Are you sure you want to delete this post?' } %>
+<% end %>
 
 <% if user_signed_in? %>
     <div>
@@ -22,5 +25,5 @@
     </div>
 <% end %>
 <div id="comments-<%= post.id %>">
-  <%= render partial: "comments/comment", collection: post.comments %>
+  <%= render partial: "comments/comment", collection: post.comments.reverse %>
 </div>

@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   before_action :authenticate_user!, :except => [:index, :show]
 
   def index
-    @posts = @posts.order(created_at: :desc).page(params[:page]).per(10)
+    @posts = @posts.includes(:comments => :user).order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def new
