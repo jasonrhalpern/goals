@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714155616) do
+ActiveRecord::Schema.define(version: 20150725193443) do
 
   create_table "comments", force: true do |t|
     t.string   "content"
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(version: 20150714155616) do
     t.integer  "followers_count",        default: 0
     t.integer  "following_count",        default: 0
     t.string   "username"
+    t.string   "avatar"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

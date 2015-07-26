@@ -25,6 +25,10 @@ gem 'spring',        group: :development
 gem 'devise'
 gem 'cancancan', '~> 1.10'
 
+gem 'fog'
+gem 'mini_magick'
+gem 'carrierwave'
+
 gem 'kaminari'
 
 gem 'geocoder'

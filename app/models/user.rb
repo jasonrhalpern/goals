@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :lockable
 
+  mount_uploader :avatar, AvatarUploader
+
   attr_accessor :login
 
   def password_complexity
