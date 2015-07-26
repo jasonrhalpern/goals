@@ -12,11 +12,11 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    registration_params = [:first_name, :last_name, :email, :password, :password_confirmation]
+    registration_params = [:first_name, :last_name, :email, :avatar, :avatar_cache, :password, :password_confirmation]
 
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(registration_params << :username) }
     devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :username, :email, :password) }
-    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(registration_params << :current_password) }
+    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(registration_params << :current_password, :remove_avatar) }
   end
 
   rescue_from CanCan::AccessDenied do |exception|

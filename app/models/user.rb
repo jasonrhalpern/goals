@@ -1,4 +1,9 @@
 class User < ActiveRecord::Base
+  mount_uploader :avatar, AvatarUploader
+
+  devise :database_authenticatable, :registerable, :confirmable,
+         :recoverable, :rememberable, :trackable, :lockable
+
   has_one :location, inverse_of: :user, dependent: :destroy
   has_one :payment, inverse_of: :user, dependent: :destroy
   has_many :user_roles, inverse_of: :user, dependent: :destroy
@@ -21,11 +26,6 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :password, presence: true, confirmation: true, length: { in: 6..20 }, if: :password_required?
   validate :password_complexity, :username_complexity
-
-  devise :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :trackable, :lockable
-
-  mount_uploader :avatar, AvatarUploader
 
   attr_accessor :login
 
