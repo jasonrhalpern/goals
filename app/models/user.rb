@@ -21,11 +21,14 @@ class User < ActiveRecord::Base
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
-  validates :first_name, :last_name, presence: true
+  validates :first_name, :last_name, :avatar, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: Devise::email_regexp }
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :password, presence: true, confirmation: true, length: { in: 6..20 }, if: :password_required?
   validate :password_complexity, :username_complexity
+  validate :file_size
+  validates_integrity_of :avatar
+  validates_processing_of :avatar
 
   attr_accessor :login
 
@@ -46,6 +49,12 @@ class User < ActiveRecord::Base
     end
     if username.present? and username.match(/^(.*admin.*)$/i)
       errors.add :username, 'cannot contain the word Admin'
+    end
+  end
+
+  def file_size
+    if avatar.present? && avatar.size > 1.megabyte
+      errors.add :avatar, 'should be less than 1MB'
     end
   end
 
