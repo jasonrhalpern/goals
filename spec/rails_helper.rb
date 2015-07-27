@@ -65,8 +65,6 @@ RSpec.configure do |config|
     Warden.test_reset!
   end
 
-  # AWS.stub!
-
 end
 
 Warden.test_mode!
