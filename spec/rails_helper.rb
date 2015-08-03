@@ -65,6 +65,10 @@ RSpec.configure do |config|
     Warden.test_reset!
   end
 
+  config.after :all do
+    FileUtils.rm_rf(Dir["#{Rails.root}/spec/support/tmp"])
+  end
+
 end
 
 Warden.test_mode!
