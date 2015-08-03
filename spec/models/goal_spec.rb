@@ -24,7 +24,7 @@ describe Goal do
   end
 
   it 'is invalid if the description is too long' do
-    expect(build_stubbed(:goal, description: 'w3#ew' * 81)).to have(1).errors_on(:description)
+    expect(build_stubbed(:goal, description: 'w3#ew' * 161)).to have(1).errors_on(:description)
   end
 
   it 'is invalid without a status' do

@@ -5,6 +5,6 @@ class Milestone < ActiveRecord::Base
 
   validates :status, :title, :description, :reach_by_date, :goal, presence: true
   validates :title, length: { maximum: 80 }
-  validates :description, length: { maximum: 400 }
+  validates :description, length: { maximum: 800 } #should only be for FREE users
 
 end

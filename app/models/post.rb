@@ -4,6 +4,6 @@ class Post < ActiveRecord::Base
 
   validates :title, :content, :goal, presence: true
   validates :title, length: { maximum: 80 }
-  validates :content, length: { maximum: 400 }
+  validates :content, length: { maximum: 800 } #should only be for FREE users
 
 end

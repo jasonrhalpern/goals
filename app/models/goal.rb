@@ -10,7 +10,7 @@ class Goal < ActiveRecord::Base
 
   validates :title, :description, :status, :visibility, :user, presence: true
   validates :title, length: { maximum: 80 }, uniqueness: { scope: :user_id }
-  validates :description, length: { maximum: 400 }
+  validates :description, length: { maximum: 800 } #should only be for FREE users
   validate :two_active_goals_per_user
 
   private

@@ -23,7 +23,7 @@ describe Milestone do
   end
 
   it 'is invalid with a description that is too long' do
-    expect(build_stubbed(:milestone, description: 'heyy' * 101)).to have(1).errors_on(:description)
+    expect(build_stubbed(:milestone, description: 'heyy' * 201)).to have(1).errors_on(:description)
   end
 
   it 'is invalid without a reach by date' do
