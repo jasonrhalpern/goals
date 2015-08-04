@@ -14,6 +14,10 @@ describe User do
     expect(build_stubbed(:user, last_name: nil)).to have(1).errors_on(:last_name)
   end
 
+  it 'is invalid without an avatar' do
+    expect(build_stubbed(:user, avatar: nil)).to have(1).errors_on(:avatar)
+  end
+
   it 'is invalid without an email' do
     expect(build_stubbed(:user, email: nil)).to have(2).errors_on(:email)
   end
