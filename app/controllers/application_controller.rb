@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
 
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(registration_params << :username) }
     devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :username, :email, :password) }
-    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(registration_params << :current_password, :remove_avatar) }
+    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(registration_params << :remove_avatar) }
   end
 
   rescue_from CanCan::AccessDenied do |exception|
