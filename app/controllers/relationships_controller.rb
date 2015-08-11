@@ -2,14 +2,6 @@ class RelationshipsController < ApplicationController
 
   before_action :authenticate_user!
 
-  def followers_index
-    @followers = Relationship.includes(:users).where(followed_id: current_user.id).page(params[:page]).per(20)
-  end
-
-  def followings_index
-    @followings = Relationship.includes(:users).where(follower_id: current_user.id).page(params[:page]).per(20)
-  end
-
   def create
     @relationship = Relationship.new(followed_id: params[:user_id], follower_id: current_user.id)
     authorize! :create, @relationship
