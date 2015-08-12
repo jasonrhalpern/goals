@@ -12,8 +12,7 @@ Rails.application.routes.draw do
       end
     end
     member do
-      get 'followers'
-      get 'followings'
+      get :following, :followers
     end
   end
 
