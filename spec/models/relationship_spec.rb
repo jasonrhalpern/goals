@@ -7,11 +7,11 @@ describe Relationship do
   end
 
   it 'is invalid without a followed user' do
-    expect(build_stubbed(:relationship, followed: nil)).to have(1).errors_on(:followed)
+    expect(build_stubbed(:relationship, followed: nil)).to have(1).errors_on(:followed_id)
   end
 
   it 'is invalid without a follower' do
-    expect(build_stubbed(:relationship, follower: nil)).to have(1).errors_on(:follower)
+    expect(build_stubbed(:relationship, follower: nil)).to have(1).errors_on(:follower_id)
   end
 
   it 'is invalid if a user is already following this other user' do
