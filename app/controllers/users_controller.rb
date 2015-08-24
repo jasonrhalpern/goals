@@ -8,11 +8,15 @@ class UsersController < ApplicationController
   end
 
   def followers
-    @followers = Relationship.includes(:follower).where(followed_id: params[:id]).page(params[:page]).per(20)
+    @title = "Followers"
+    @relationships = Relationship.includes(:follower).where(followed_id: params[:id]).page(params[:page]).per(20)
+    render 'show_follow'
   end
 
   def following
-    @following = Relationship.includes(:followed).where(follower_id: params[:id]).page(params[:page]).per(20)
+    @title = "Following"
+    @relationships = Relationship.includes(:followed).where(follower_id: params[:id]).page(params[:page]).per(20)
+    render 'show_follow'
   end
 
 end

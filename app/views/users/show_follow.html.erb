@@ -1,0 +1,14 @@
+<%= @title %>
+<div>
+  <%= image_tag user.avatar.url %>
+  <%= @user.full_name %>
+  <%= render 'shared/stats' %>
+</div>
+
+
+<% if @relationships.present? %>
+  <div>
+    <%= render :partial => 'user', :collection => @relationships  %>
+  </div>
+  <%= paginate @goals %>
+<% end %>

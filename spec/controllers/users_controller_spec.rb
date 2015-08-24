@@ -21,12 +21,12 @@ describe UsersController do
       relationship_two = create(:relationship, :follower => create(:user), :followed => @user)
       relationship_three = create(:relationship, :follower => @user, :followed => create(:user))
       get :following, :id => @user
-      expect(assigns(:following)).to match_array([relationship_one, relationship_three])
+      expect(assigns(:relationships)).to match_array([relationship_one, relationship_three])
     end
 
     it "renders the :following template" do
       get :following, :id => @user
-      expect(response).to render_template("following")
+      expect(response).to render_template("show_follow")
     end
   end
 
@@ -36,12 +36,12 @@ describe UsersController do
       relationship_two = create(:relationship, :follower => create(:user), :followed => @user)
       relationship_three = create(:relationship, :follower => @user, :followed => create(:user))
       get :followers, :id => @user
-      expect(assigns(:followers)).to match_array([relationship_one, relationship_two])
+      expect(assigns(:relationships)).to match_array([relationship_one, relationship_two])
     end
 
     it "renders the :followers template" do
       get :followers, :id => @user
-      expect(response).to render_template("followers")
+      expect(response).to render_template("show_follow")
     end
   end
 
