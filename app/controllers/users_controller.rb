@@ -3,6 +3,10 @@ class UsersController < ApplicationController
 
   before_action :authenticate_user!, :only => []
 
+  def show
+    @user = User.includes(:goals).find(params[:id])
+  end
+
   def followers
     @followers = Relationship.includes(:follower).where(followed_id: params[:id]).page(params[:page]).per(20)
   end

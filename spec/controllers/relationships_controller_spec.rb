@@ -24,7 +24,7 @@ describe RelationshipsController do
 
       it "re-renders the toggle template" do
         xhr :post, :create, { followed_id: @user_two.id }
-        expect(response).to render_template('toggle')
+        expect(response).to render_template('create')
       end
     end
 
@@ -56,7 +56,7 @@ describe RelationshipsController do
 
     it "re-renders the toggle template" do
       xhr :post, :destroy, id: @relationship.id
-      expect(response).to render_template('toggle')
+      expect(response).to render_template('destroy')
     end
   end
 

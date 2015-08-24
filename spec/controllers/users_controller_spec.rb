@@ -3,6 +3,18 @@ require 'rails_helper'
 describe UsersController do
   login_user
 
+  describe "GET #show" do
+    it "assigns the requested user to @user" do
+      get :show, :id => @user
+      expect(assigns(:user)).not_to be_nil
+    end
+
+    it "renders the :show template" do
+      get :show, :id => @user
+      expect(response).to render_template("show")
+    end
+  end
+
   describe "GET #following" do
     it "populates an array of all the following" do
       relationship_one = create(:relationship, :follower => @user, :followed => create(:user))
