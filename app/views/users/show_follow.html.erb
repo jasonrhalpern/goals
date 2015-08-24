@@ -1,6 +1,6 @@
 <%= @title %>
 <div>
-  <%= image_tag user.avatar.url %>
+  <%= image_tag @user.avatar.url %>
   <%= @user.full_name %>
   <%= render 'shared/stats' %>
 </div>
@@ -10,5 +10,5 @@
   <div>
     <%= render :partial => 'user', :collection => @relationships  %>
   </div>
-  <%= paginate @goals %>
+  <%= paginate @relationships %>
 <% end %>

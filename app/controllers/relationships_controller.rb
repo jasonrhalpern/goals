@@ -14,8 +14,9 @@ class RelationshipsController < ApplicationController
 
   def destroy
     @relationship = Relationship.find(params[:id])
+    @user = @relationship.followed
     authorize! :destroy, @relationship
-    current_user.unfollow(@relationship.followed)
+    current_user.unfollow(@user)
     respond_to do |format|
       format.html { redirect_to @user }
       format.js

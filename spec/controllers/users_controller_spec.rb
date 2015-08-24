@@ -17,11 +17,12 @@ describe UsersController do
 
   describe "GET #following" do
     it "populates an array of all the following" do
-      relationship_one = create(:relationship, :follower => @user, :followed => create(:user))
-      relationship_two = create(:relationship, :follower => create(:user), :followed => @user)
-      relationship_three = create(:relationship, :follower => @user, :followed => create(:user))
+      user_two, user_three = create(:user), create(:user)
+      create(:relationship, :follower => @user, :followed => user_two)
+      create(:relationship, :follower => create(:user), :followed => @user)
+      create(:relationship, :follower => @user, :followed => user_three)
       get :following, :id => @user
-      expect(assigns(:relationships)).to match_array([relationship_one, relationship_three])
+      expect(assigns(:relationships)).to match_array([user_two, user_three])
     end
 
     it "renders the :following template" do
@@ -32,11 +33,12 @@ describe UsersController do
 
   describe "GET #followers" do
     it "populates an array of all the followers" do
-      relationship_one = create(:relationship, :follower => create(:user), :followed => @user)
-      relationship_two = create(:relationship, :follower => create(:user), :followed => @user)
-      relationship_three = create(:relationship, :follower => @user, :followed => create(:user))
+      user_two, user_three = create(:user), create(:user)
+      create(:relationship, :follower => user_two, :followed => @user)
+      create(:relationship, :follower => user_three, :followed => @user)
+      create(:relationship, :follower => @user, :followed => create(:user))
       get :followers, :id => @user
-      expect(assigns(:relationships)).to match_array([relationship_one, relationship_two])
+      expect(assigns(:relationships)).to match_array([user_two, user_three])
     end
 
     it "renders the :followers template" do
