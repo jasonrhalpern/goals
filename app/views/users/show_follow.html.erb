@@ -8,7 +8,7 @@
 
 
 <% if @users.present? %>
-  <div id="relationships">
+  <div id="<%= @title == "Following" ? "following_list" : "follower_list" %>">
     <%= render @users  %>
   </div>
   <%= paginate @users %>

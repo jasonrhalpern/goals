@@ -1,3 +1,3 @@
 $("#follow_form").html("<%= escape_javascript(render('users/unfollow')) %>");
 $("#followers").html('<%= @user.followers.count %>');
-$("#relationships").prepend("<%= j (render :partial => 'users/user', :locals => { :user => @relationship.follower }) %>");
+$("#follower_list").prepend("<%= j (render :partial => 'users/user', :locals => { :user => @relationship.follower }) %>");
