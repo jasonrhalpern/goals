@@ -3,12 +3,17 @@ class RelationshipsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @user = User.find(params[:followed_id])
-    authorize! :create, Relationship.new(followed: @user, follower: current_user)
-    current_user.follow(@user)
+    @relationship = Relationship.new(relationship_params)
+    @user = @relationship.followed
+    authorize! :create, @relationship
     respond_to do |format|
-      format.html { redirect_to @user }
-      format.js
+      if @relationship.save
+        format.html { redirect_to @user }
+        format.js
+      else
+        format.html { redirect_to @user }
+        format.js
+      end
     end
   end
 
@@ -16,7 +21,7 @@ class RelationshipsController < ApplicationController
     @relationship = Relationship.find(params[:id])
     @user = @relationship.followed
     authorize! :destroy, @relationship
-    current_user.unfollow(@user)
+    @relationship.destroy
     respond_to do |format|
       format.html { redirect_to @user }
       format.js
@@ -26,7 +31,7 @@ class RelationshipsController < ApplicationController
   private
 
   def relationship_params
-    params.require(:relationship).permit(:followed_id, :follower_id)
+    params.require(:relationship).permit(:followed_id).merge(follower_id: current_user.id)
   end
 
 end

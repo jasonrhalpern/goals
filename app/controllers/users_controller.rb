@@ -9,13 +9,13 @@ class UsersController < ApplicationController
 
   def followers
     @title = "Followers"
-    @relationships = @user.followers.page(params[:page]).per(20)
+    @users = @user.followers.page(params[:page]).per(20)
     render 'show_follow'
   end
 
   def following
     @title = "Following"
-    @relationships = @user.following.page(params[:page]).per(20)
+    @users = @user.following.page(params[:page]).per(20)
     render 'show_follow'
   end
 

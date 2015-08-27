@@ -22,7 +22,7 @@ describe UsersController do
       create(:relationship, :follower => create(:user), :followed => @user)
       create(:relationship, :follower => @user, :followed => user_three)
       get :following, :id => @user
-      expect(assigns(:relationships)).to match_array([user_two, user_three])
+      expect(assigns(:users)).to match_array([user_two, user_three])
     end
 
     it "renders the :following template" do
@@ -38,7 +38,7 @@ describe UsersController do
       create(:relationship, :follower => user_three, :followed => @user)
       create(:relationship, :follower => @user, :followed => create(:user))
       get :followers, :id => @user
-      expect(assigns(:relationships)).to match_array([user_two, user_three])
+      expect(assigns(:users)).to match_array([user_two, user_three])
     end
 
     it "renders the :followers template" do

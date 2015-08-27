@@ -7,9 +7,9 @@
 </div>
 
 
-<% if @relationships.present? %>
-  <div>
-    <%= render :partial => 'user', :collection => @relationships  %>
+<% if @users.present? %>
+  <div id="relationships">
+    <%= render @users  %>
   </div>
-  <%= paginate @relationships %>
+  <%= paginate @users %>
 <% end %>
