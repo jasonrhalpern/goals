@@ -1,4 +1,4 @@
-<%= bootstrap_form_for Relationship.new, remote: true do |f| %>
+<%= form_for(Relationship.new, remote: true) do |f| %>
     <%= f.hidden_field :followed_id, value: @user.id %>
     <%= f.submit "Follow", class: "btn btn-primary" %>
 <% end %>
