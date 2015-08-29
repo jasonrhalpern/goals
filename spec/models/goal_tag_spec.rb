@@ -7,11 +7,11 @@ describe GoalTag do
   end
 
   it 'is invalid without a goal' do
-    expect(build_stubbed(:goal_tag, goal: nil)).to have(1).errors_on(:goal_id)
+    expect(build_stubbed(:goal_tag, goal: nil)).to have(1).errors_on(:goal)
   end
 
   it 'is invalid without a tag' do
-    expect(build_stubbed(:goal_tag, tag: nil)).to have(1).errors_on(:tag_id)
+    expect(build_stubbed(:goal_tag, tag: nil)).to have(1).errors_on(:tag)
   end
 
   it 'is invalid if the tag is already associated with this goal' do

@@ -5,6 +5,7 @@ class GoalsController < ApplicationController
   skip_authorize_resource :user, :only => :index
 
   before_action :authenticate_user!, :except => [:index, :show]
+  before_action :remove_blank_tags, :only => [:create]
 
   def index
     @goals = @goals.order(created_at: :desc).page(params[:page]).per(10)
@@ -41,13 +42,17 @@ class GoalsController < ApplicationController
   end
 
   def goal_params
-    params.require(:goal).permit(:title, :description, :visibility, :status, :user_id)
+    params.require(:goal).permit(:title, :description, :visibility, :status, :user_id, :tag_ids => [])
   end
 
   protected
 
   def set_user
     @user ||= @goal.user
+  end
+
+  def remove_blank_tags
+    params[:goal][:tag_ids].reject!(&:blank?) if params[:goal][:tag_ids].present?
   end
 
 end

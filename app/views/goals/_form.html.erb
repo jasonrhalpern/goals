@@ -27,6 +27,10 @@
       <% end %>
     </div>
 
+    <div class="field">
+      <%= f.select :tag_ids, options_from_collection_for_select(Tag.all, :id, :name), { :label => "Tags" }, id: 'tag-select', multiple: "multiple" %>
+    </div>
+
     <div class="actions">
       <%= f.submit 'Save' %>
     </div>
