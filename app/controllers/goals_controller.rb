@@ -8,7 +8,7 @@ class GoalsController < ApplicationController
   before_action :remove_blank_tags, :only => [:create]
 
   def index
-    @goals = @goals.order(created_at: :desc).page(params[:page]).per(10)
+    @goals = @goals.includes(:tags).order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def new

@@ -18,6 +18,11 @@
   <%= display_visibility(goal.visibility) %>
 </p>
 
+<p>
+  <strong>Tags:</strong>
+  <%= display_tags(goal.tags) %>
+</p>
+
 <% if can? :update, goal %>
     <%= link_to 'Edit', edit_goal_path(goal) %>
 <% end %>

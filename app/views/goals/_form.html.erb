@@ -28,7 +28,11 @@
     </div>
 
     <div class="field">
-      <%= f.select :tag_ids, options_from_collection_for_select(Tag.all, :id, :name), { :label => "Tags" }, id: 'tag-select', multiple: "multiple" %>
+      <% if action_name == 'edit' %>
+        <%= f.select :tag_ids, options_from_collection_for_select(Tag.all, :id, :name, @goal.tags.map(&:id)), { :label => "Tags" }, id: 'tag-select', multiple: "multiple" %>
+      <% else %>
+        <%= f.select :tag_ids, options_from_collection_for_select(Tag.all, :id, :name, params[:goal] && params[:goal][:tag_ids] ? params[:goal][:tag_ids] : ""), { :label => "Tags" }, id: 'tag-select', multiple: "multiple" %>
+      <% end %>
     </div>
 
     <div class="actions">
