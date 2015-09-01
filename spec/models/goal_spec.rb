@@ -45,6 +45,10 @@ describe Goal do
     expect(build(:goal, user: goal_2.user)).to have(1).errors_on(:base)
   end
 
+  it 'is invalid if this goal has more than 3 tags' do
+    expect(create(:goal_with_too_many_tags)).to have(1).errors_on(:base)
+  end
+
   it 'is associated with 3 tags' do
     expect(create(:goal_with_tags).tags.count).to eq(3)
   end

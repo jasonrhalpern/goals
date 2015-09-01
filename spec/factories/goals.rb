@@ -25,6 +25,16 @@ FactoryGirl.define do
     end
   end
 
+  factory :goal_with_too_many_tags, parent: :goal do
+    transient do
+      tags_count 4
+    end
+
+    after(:create) do |goal, evaluator|
+      create_list(:goal_tag, evaluator.tags_count, goal: goal)
+    end
+  end
+
   factory :goal_with_posts, parent: :goal do
     transient do
       posts_count 2

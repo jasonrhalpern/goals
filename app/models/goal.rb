@@ -11,11 +11,11 @@ class Goal < ActiveRecord::Base
   validates :title, :description, :status, :visibility, :user, presence: true
   validates :title, length: { maximum: 80 }, uniqueness: { scope: :user_id }
   validates :description, length: { maximum: 800 } #should only be for FREE users
-  validate :two_active_goals_per_user
+  validate :maximum_active_goals_per_user, :maximum_goal_tags
 
   private
 
-  def two_active_goals_per_user
+  def maximum_active_goals_per_user
     if user.present? && status.present? && status == 'active'
       active_goals = Goal.where(user_id: user.id, status: Goal.statuses[:active])
       if active_goals.count == 2
@@ -24,6 +24,12 @@ class Goal < ActiveRecord::Base
                           starting a new one.'
         end
       end
+    end
+  end
+
+  def maximum_goal_tags
+    if self.goal_tags.count > 3
+      errors.add :base, 'You can only add a maximum of 3 tags'
     end
   end
 
