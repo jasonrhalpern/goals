@@ -122,10 +122,6 @@ describe User do
     expect{ user.destroy }.to change{ Location.count }.by(-1)
   end
 
-  it 'destroys the associated payment' do
-    user = create(:user_with_active_payment)
-    expect{ user.destroy }.to change{ Payment.count }.by(-1)
-  end
 
   it 'is following 5 users' do
     expect(create(:user_with_followings).following.count).to eq(5)
@@ -163,63 +159,6 @@ describe User do
   it 'does not destroy the associated following users' do
     user = create(:user_with_followers)
     expect{ user.destroy }.to change{ User.count }.by(-1)
-  end
-
-  it 'returns a list of users with active payments' do
-    user1 = create(:user_with_active_payment)
-    user2 = create(:user_with_inactive_payment)
-
-    expect(User.active).to eq([user1])
-  end
-
-  describe '#active?' do
-    it 'returns true if the user is active' do
-      user = build(:user_with_active_payment)
-      expect(user.active?).to be_truthy
-    end
-
-    it 'returns false if the user is not active' do
-      user = build(:user_with_inactive_payment)
-      expect(user.active?).to be_falsey
-    end
-  end
-
-  describe '#pending?' do
-    it 'returns true if the user is pending' do
-      user = build(:user)
-      expect(user.pending?).to be_truthy
-    end
-
-    it 'returns false if the user is not pending' do
-      user = build(:user_with_active_payment)
-      expect(user.pending?).to be_falsey
-    end
-  end
-
-  describe '#canceled?' do
-    it 'returns true if the user is canceled' do
-      payment = build(:payment, :stripe_sub_token => nil)
-      user = build(:user, :payment => payment)
-      expect(user.canceled?).to be_truthy
-    end
-
-    it 'returns false if the user is not canceled' do
-      payment = build(:payment)
-      user = build(:user, :payment => payment)
-      expect(user.canceled?).to be_falsey
-    end
-  end
-
-  describe '#deactivated?' do
-    it 'returns true if the user is deactivated' do
-      user = build(:user_with_inactive_payment)
-      expect(user.deactivated?).to be_truthy
-    end
-
-    it 'returns false if the user is active' do
-      user = build(:user_with_active_payment)
-      expect(user.deactivated?).to be_falsey
-    end
   end
 
   describe '#follow' do

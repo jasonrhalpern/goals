@@ -10,7 +10,6 @@ class Ability
     else
       can :crud, User, :id => user.id
       can :crud, Location, :user_id => user.id
-      can :crud, Payment, :user_id => user.id
       can :crud, Goal, :user_id => user.id
       can :crud, Milestone, :goal => { :user_id => user.id }
       can :crud, Post, :goal => { :user_id => user.id }

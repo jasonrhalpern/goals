@@ -23,12 +23,6 @@ describe 'Ability' do
       assert @ability.cannot?(:crud, Location.new(:user => @user_two))
     end
 
-    it "can crud his own payment, but not the payment of other users" do
-      assert @ability.can?(:crud, Payment.new(:user => @user))
-      assert @ability.cannot?(:crud, Payment.new)
-      assert @ability.cannot?(:crud, Payment.new(:user => @user_two))
-    end
-
     it "can crud his own goals, but can't create, update or delete the goals of others" do
       assert @ability.can?(:crud, @goal)
       assert @ability.cannot?([:create, :update, :delete], Goal.new)
@@ -108,12 +102,6 @@ describe 'Ability' do
       assert @ability.can?(:crud, Location.new(:user => @admin))
       assert @ability.can?(:crud, Location.new)
       assert @ability.can?(:crud, Location.new(:user => @user))
-    end
-
-    it "can crud his own payment and those of other users" do
-      assert @ability.can?(:crud, Payment.new(:user => @admin))
-      assert @ability.can?(:crud, Payment.new)
-      assert @ability.can?(:crud, Payment.new(:user => @user))
     end
 
     it "can crud his own goals and those of other users" do

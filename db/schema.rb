@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725193443) do
+ActiveRecord::Schema.define(version: 20150901172422) do
 
   create_table "comments", force: true do |t|
     t.string   "content"
@@ -72,27 +72,6 @@ ActiveRecord::Schema.define(version: 20150725193443) do
   end
 
   add_index "milestones", ["goal_id"], name: "index_milestones_on_goal_id"
-
-  create_table "payments", force: true do |t|
-    t.string   "stripe_cus_token"
-    t.string   "stripe_sub_token"
-    t.datetime "active_until"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "payments", ["user_id"], name: "index_payments_on_user_id"
-
-  create_table "plans", force: true do |t|
-    t.string   "stripe_plan_token"
-    t.text     "description"
-    t.integer  "trial_days"
-    t.string   "interval"
-    t.boolean  "active"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "posts", force: true do |t|
     t.string   "title"
