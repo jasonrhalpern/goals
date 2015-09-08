@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150901172422) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "comments", force: true do |t|
     t.string   "content"
     t.integer  "post_id"
@@ -21,8 +24,8 @@ ActiveRecord::Schema.define(version: 20150901172422) do
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["post_id"], name: "index_comments_on_post_id"
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+  add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "goal_tags", force: true do |t|
     t.integer  "goal_id"
@@ -31,8 +34,8 @@ ActiveRecord::Schema.define(version: 20150901172422) do
     t.datetime "updated_at"
   end
 
-  add_index "goal_tags", ["goal_id"], name: "index_goal_tags_on_goal_id"
-  add_index "goal_tags", ["tag_id"], name: "index_goal_tags_on_tag_id"
+  add_index "goal_tags", ["goal_id"], name: "index_goal_tags_on_goal_id", using: :btree
+  add_index "goal_tags", ["tag_id"], name: "index_goal_tags_on_tag_id", using: :btree
 
   create_table "goals", force: true do |t|
     t.integer  "status",      default: 0
@@ -44,7 +47,7 @@ ActiveRecord::Schema.define(version: 20150901172422) do
     t.integer  "visibility"
   end
 
-  add_index "goals", ["user_id"], name: "index_goals_on_user_id"
+  add_index "goals", ["user_id"], name: "index_goals_on_user_id", using: :btree
 
   create_table "locations", force: true do |t|
     t.string   "address"
@@ -59,7 +62,7 @@ ActiveRecord::Schema.define(version: 20150901172422) do
     t.datetime "updated_at"
   end
 
-  add_index "locations", ["user_id"], name: "index_locations_on_user_id"
+  add_index "locations", ["user_id"], name: "index_locations_on_user_id", using: :btree
 
   create_table "milestones", force: true do |t|
     t.integer  "status",        default: 0
@@ -71,7 +74,7 @@ ActiveRecord::Schema.define(version: 20150901172422) do
     t.string   "title"
   end
 
-  add_index "milestones", ["goal_id"], name: "index_milestones_on_goal_id"
+  add_index "milestones", ["goal_id"], name: "index_milestones_on_goal_id", using: :btree
 
   create_table "posts", force: true do |t|
     t.string   "title"
@@ -81,7 +84,7 @@ ActiveRecord::Schema.define(version: 20150901172422) do
     t.datetime "updated_at"
   end
 
-  add_index "posts", ["goal_id"], name: "index_posts_on_goal_id"
+  add_index "posts", ["goal_id"], name: "index_posts_on_goal_id", using: :btree
 
   create_table "relationships", force: true do |t|
     t.integer  "followed_id"
@@ -90,9 +93,9 @@ ActiveRecord::Schema.define(version: 20150901172422) do
     t.datetime "updated_at"
   end
 
-  add_index "relationships", ["followed_id", "follower_id"], name: "index_relationships_on_followed_id_and_follower_id", unique: true
-  add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id"
-  add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id"
+  add_index "relationships", ["followed_id", "follower_id"], name: "index_relationships_on_followed_id_and_follower_id", unique: true, using: :btree
+  add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
+  add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -113,8 +116,8 @@ ActiveRecord::Schema.define(version: 20150901172422) do
     t.datetime "updated_at"
   end
 
-  add_index "user_roles", ["role_id"], name: "index_user_roles_on_role_id"
-  add_index "user_roles", ["user_id"], name: "index_user_roles_on_user_id"
+  add_index "user_roles", ["role_id"], name: "index_user_roles_on_role_id", using: :btree
+  add_index "user_roles", ["user_id"], name: "index_user_roles_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -144,10 +147,10 @@ ActiveRecord::Schema.define(version: 20150901172422) do
     t.string   "avatar"
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true
-  add_index "users", ["username"], name: "index_users_on_username", unique: true
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
 end

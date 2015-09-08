@@ -1,4 +1,6 @@
 class Goal < ActiveRecord::Base
+  include PgSearch
+  pg_search_scope :search, :against => { :title => 'A', :description => 'B' }
   has_many :milestones, inverse_of: :goal, dependent: :destroy
   has_many :goal_tags, inverse_of: :goal, dependent: :destroy
   has_many :tags, :through => :goal_tags

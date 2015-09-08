@@ -1,0 +1,9 @@
+<% if @goals.present? %>
+    <% @goals.each do |goal| %>
+        <div><%= goal.user.full_name %></div>
+        <div><%= goal.title %></div>
+        <div><%= goal.description %></div>
+    <% end %>
+<% else %>
+    There are no matches for this search.
+<% end %>
