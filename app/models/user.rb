@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_many :active_relationships, class_name:  'Relationship',
            foreign_key: 'follower_id',
            inverse_of: :follower,
-           dependent:   :destroy  
+           dependent:   :destroy
   has_many :passive_relationships, class_name:  'Relationship',
            foreign_key: 'followed_id',
            inverse_of: :followed,

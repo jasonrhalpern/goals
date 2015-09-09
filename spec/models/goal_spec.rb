@@ -42,7 +42,8 @@ describe Goal do
   it 'is invalid if this user already has two active goals' do
     goal_1 = create(:goal)
     goal_2 = create(:goal, :user => goal_1.user)
-    expect(build(:goal, user: goal_2.user)).to have(1).errors_on(:base)
+    goal_3 = create(:goal, :user => goal_1.user)
+    expect(build(:goal, user: goal_1.user)).to have(1).errors_on(:base)
   end
 
   it 'is invalid if this goal has more than 3 tags' do
@@ -88,6 +89,11 @@ describe Goal do
     expect{ goal.destroy }.to change{ Milestone.count }.by(-milestones_count)
   end
 
-
+  it 'returns the viewable public goals' do
+    goal1 = create(:goal)
+    goal2 = create(:private_goal)
+    goal3 = create(:goal)
+    expect(Goal.viewable).to eq([goal1, goal3])
+  end
 
 end

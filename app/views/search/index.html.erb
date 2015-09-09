@@ -1,9 +1,7 @@
 <% if @goals.present? %>
-    <% @goals.each do |goal| %>
-        <div><%= goal.user.full_name %></div>
-        <div><%= goal.title %></div>
-        <div><%= goal.description %></div>
-    <% end %>
+    <%= render partial: 'goals/goal_search', collection: @goals, as: :goal %>
 <% else %>
     There are no matches for this search.
 <% end %>
+
+<%= paginate @goals %>
