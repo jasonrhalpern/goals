@@ -1,0 +1,3 @@
+class PersonalGoal < Goal
+
+end

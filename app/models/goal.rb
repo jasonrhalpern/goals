@@ -12,7 +12,7 @@ class Goal < ActiveRecord::Base
   enum status: [ :active, :closed, :completed ] #DO NOT change this order
   enum visibility: [ :publiced, :privated ] #DO NOT change this order
 
-  validates :title, :description, :status, :visibility, :user, presence: true
+  validates :title, :description, :status, :visibility, :type, :user, presence: true
   validates :title, length: { maximum: 80 }, uniqueness: { scope: :user_id }
   validates :description, length: { maximum: 800 } #should only be for FREE users
   validate :maximum_active_goals_per_user, :maximum_goal_tags

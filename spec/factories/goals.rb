@@ -4,6 +4,7 @@ FactoryGirl.define do
     sequence(:description) { |n| "description#{n}" }
     visibility :publiced
     status :active
+    type 'PersonalGoal'
     user
   end
 
@@ -53,5 +54,11 @@ FactoryGirl.define do
     after(:create) do |goal, evaluator|
       create_list(:milestone, evaluator.milestones_count, goal: goal)
     end
+  end
+
+  factory :personal_goal, parent: :goal, class: 'PersonalGoal' do
+  end
+
+  factory :group_goal, parent: :goal, class: 'GroupGoal' do
   end
 end

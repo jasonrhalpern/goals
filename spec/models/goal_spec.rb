@@ -35,6 +35,10 @@ describe Goal do
     expect(build_stubbed(:goal, visibility: nil)).to have(1).errors_on(:visibility)
   end
 
+  it 'is invalid without a type' do
+    expect(build_stubbed(:goal, type: nil)).to have(1).errors_on(:type)
+  end
+
   it 'is invalid without a user' do
     expect(build_stubbed(:goal, user: nil)).to have(1).errors_on(:user)
   end
@@ -90,9 +94,9 @@ describe Goal do
   end
 
   it 'returns the viewable public goals' do
-    goal1 = create(:goal)
+    goal1 = create(:personal_goal)
     goal2 = create(:private_goal)
-    goal3 = create(:goal)
+    goal3 = create(:personal_goal)
     expect(Goal.viewable).to eq([goal1, goal3])
   end
 

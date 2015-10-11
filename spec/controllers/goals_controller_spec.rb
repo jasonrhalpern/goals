@@ -3,12 +3,12 @@ require 'rails_helper'
 describe GoalsController do
   login_user
 
-  let(:johns_goal) { create(:goal, :user => @user) }
+  let(:johns_goal) { create(:personal_goal, :user => @user) }
 
   describe "GET #index" do
     it "populates an array of all the goals" do
-      goal_one = create(:goal, :user => @user)
-      goal_two = create(:goal, :status => Goal.statuses[:completed], :user => @user)
+      goal_one = create(:personal_goal, :user => @user)
+      goal_two = create(:personal_goal, :status => Goal.statuses[:completed], :user => @user)
       get :index, :user_id => @user
       expect(assigns(:goals)).to match_array([goal_one, goal_two])
     end

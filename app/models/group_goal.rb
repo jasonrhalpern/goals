@@ -1,0 +1,3 @@
+class GroupGoal < Goal
+
+end

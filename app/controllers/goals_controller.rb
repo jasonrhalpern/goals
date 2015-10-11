@@ -42,7 +42,7 @@ class GoalsController < ApplicationController
   end
 
   def goal_params
-    params.require(:goal).permit(:title, :description, :visibility, :status, :user_id, :tag_ids => [])
+    params.require(:goal).permit(:title, :description, :visibility, :status, :type, :user_id, :tag_ids => [])
   end
 
   protected
