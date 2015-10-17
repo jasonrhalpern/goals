@@ -35,10 +35,6 @@ describe Goal do
     expect(build_stubbed(:goal, visibility: nil)).to have(1).errors_on(:visibility)
   end
 
-  it 'is invalid without a type' do
-    expect(build_stubbed(:goal, type: nil)).to have(1).errors_on(:type)
-  end
-
   it 'is invalid without a user' do
     expect(build_stubbed(:goal, user: nil)).to have(1).errors_on(:user)
   end
@@ -94,10 +90,44 @@ describe Goal do
   end
 
   it 'returns the viewable public goals' do
-    goal1 = create(:personal_goal)
+    goal1 = create(:goal)
     goal2 = create(:private_goal)
-    goal3 = create(:personal_goal)
-    expect(Goal.viewable).to eq([goal1, goal3])
+    goal3 = create(:goal)
+    goal4 = create(:group_goal)
+    expect(Goal.viewable).to eq([goal3, goal1])
   end
 
+  it 'returns all the personal goals' do
+    goal1 = create(:group_goal)
+    goal2 = create(:goal)
+    goal3 = create(:goal)
+    expect(Goal.personal_goals).to eq([goal3, goal2])
+  end
+
+  it 'returns all the group goals' do
+    goal1 = create(:group_goal)
+    goal2 = create(:group_goal)
+    goal3 = create(:goal)
+    expect(Goal.group_goals).to eq([goal1, goal2])
+  end
+
+  describe 'personal_goal?' do
+    it 'returns true if the goal is a personal goal' do
+      expect(build_stubbed(:goal).personal_goal?).to be_truthy
+    end
+
+    it 'returns false if the goal is a group goal' do
+      expect(build_stubbed(:group_goal).personal_goal?).to be_falsey
+    end
+  end
+
+  describe 'group_goal?' do
+    it 'returns true if the goal is a group goal' do
+      expect(build_stubbed(:group_goal).group_goal?).to be_truthy
+    end
+
+    it 'returns false if the goal is a personal goal' do
+      expect(build_stubbed(:goal).group_goal?).to be_falsey
+    end
+  end
 end

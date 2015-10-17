@@ -8,16 +8,27 @@ class Goal < ActiveRecord::Base
   has_many :tags, :through => :goal_tags
   has_many :posts, inverse_of: :goal, dependent: :destroy
   belongs_to :user, inverse_of: :goals
+  belongs_to :group, inverse_of: :goals
 
   enum status: [ :active, :closed, :completed ] #DO NOT change this order
   enum visibility: [ :publiced, :privated ] #DO NOT change this order
 
-  validates :title, :description, :status, :visibility, :type, :user, presence: true
+  validates :title, :description, :status, :visibility, :user, presence: true
   validates :title, length: { maximum: 80 }, uniqueness: { scope: :user_id }
   validates :description, length: { maximum: 800 } #should only be for FREE users
   validate :maximum_active_goals_per_user, :maximum_goal_tags
 
-  scope :viewable, -> { where visibility: 'publiced' }
+  scope :viewable, -> { where visibility: 'publiced', group_id: nil }
+  scope :personal_goals, -> { where group_id: nil }
+  scope :group_goals, -> { where.not group_id: nil }
+
+  def personal_goal?
+    group_id.nil?
+  end
+
+  def group_goal?
+    group_id.present?
+  end
 
   private
 

@@ -4,12 +4,15 @@ FactoryGirl.define do
     sequence(:description) { |n| "description#{n}" }
     visibility :publiced
     status :active
-    type 'PersonalGoal'
     user
   end
 
   factory :private_goal, parent: :goal  do
     visibility :privated
+  end
+
+  factory :group_goal, parent: :goal  do
+    group
   end
 
   factory :completed_goal, parent: :goal do
@@ -56,9 +59,4 @@ FactoryGirl.define do
     end
   end
 
-  factory :personal_goal, parent: :goal, class: 'PersonalGoal' do
-  end
-
-  factory :group_goal, parent: :goal, class: 'GroupGoal' do
-  end
 end

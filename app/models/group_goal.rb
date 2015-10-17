@@ -1,3 +1,0 @@
-class GroupGoal < Goal
-
-end

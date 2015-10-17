@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :user_roles, inverse_of: :user, dependent: :destroy
   has_many :roles, :through => :user_roles
   has_many :goals, inverse_of: :user, dependent: :destroy
+  has_many :groups, inverse_of: :user
   has_many :comments, inverse_of: :user, dependent: :destroy
   has_many :active_relationships, class_name:  'Relationship',
            foreign_key: 'follower_id',
